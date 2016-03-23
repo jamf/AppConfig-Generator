@@ -1,0 +1,1067 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified">
+    <xs:element name="managedAppConfiguration">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element minOccurs="1" maxOccurs="1" ref="version"/>
+                <xs:element minOccurs="1" maxOccurs="1" ref="bundleId"/>
+                <xs:element minOccurs="1" maxOccurs="1" ref="dict"/>
+                <xs:element minOccurs="0" maxOccurs="1" ref="presentation"/>
+            </xs:sequence>
+        </xs:complexType>
+        <xs:key name="keyDictKeyName">
+            <xs:selector xpath="dict/string|dict/stringArray|dict/integer|dict/integerArray|dict/float|dict/floatArray|dict/date|dict/boolean"/>
+            <xs:field xpath="@keyName"/>
+        </xs:key>
+        <xs:keyref name="refFieldKeyName" refer="keyDictKeyName">
+            <xs:selector xpath="presentation/fieldGroup/field|presentation/field"/>
+            <xs:field xpath="@keyName"/>
+        </xs:keyref>
+    </xs:element>
+    <xs:element name="version">
+        <xs:annotation>
+            <xs:documentation>
+            The 'version' element specifies the version of the configuration settings. 
+            The version value should be an integer which increments for each revision 
+            you make to the configuration settings.
+            </xs:documentation>
+        </xs:annotation>
+        <xs:simpleType>
+            <xs:restriction base="xs:int">
+                <xs:minInclusive value="1"/>
+                <xs:totalDigits value="5"/>
+            </xs:restriction>
+        </xs:simpleType>
+    </xs:element>
+    <xs:element name="bundleId">
+        <xs:annotation>
+            <xs:documentation>
+            The 'bundleId' element specifies the bundle identifier of the app. 
+            </xs:documentation>
+        </xs:annotation>
+        <xs:simpleType>
+            <xs:restriction base="xs:string">
+                <xs:pattern value="([a-zA-Z0-9]+\.)+([a-zA-Z0-9])+"/>
+            </xs:restriction>
+        </xs:simpleType>
+    </xs:element>
+    <!-- ~~~~~~~~~~~~~ -->
+    <!--     DICT      -->
+    <!-- ~~~~~~~~~~~~~ -->
+    <xs:element name="dict">
+        <xs:annotation>
+            <xs:documentation>
+            The 'dict' element is the root element for the individual keys which
+            make up the app's configuration settings. Each direct child element 
+            defines a configuration setting (key) that you require the EMM 
+            (Enterprise Mobility Management) service to send to the app.
+            </xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+            <xs:choice minOccurs="1" maxOccurs="unbounded">
+                <xs:element ref="string"/>
+                <xs:element ref="stringArray"/>
+                <xs:element ref="integer"/>
+                <xs:element ref="integerArray"/>
+                <xs:element ref="float"/>
+                <xs:element ref="floatArray"/>
+                <xs:element ref="date"/>
+                <xs:element ref="boolean"/>
+            </xs:choice>
+        </xs:complexType>
+    </xs:element>
+    
+    <xs:element name="string">
+        <xs:annotation>
+            <xs:documentation>
+            The 'string' element defines a key that you require the EMM service to send
+            to the app in a key-value pair. The value must be a string.
+            </xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element minOccurs="0" maxOccurs="1" name="defaultValue" type="stringValueType">
+                    <xs:annotation>
+                        <xs:documentation>
+                     The optional 'defaultValue' element specifies the default value for the
+                    EMM service to:  
+                    - display in the user interface control for the configuration setting. 
+                    - send to the app as the value in a key-value pair if the enterprise 
+                      administrator makes no change to the user interface control 
+                
+                    It contains one of the child elements 'value', 'userVariable', 
+                    or 'deviceVariable'.
+
+                    Setting a default value is recommended to make the app ready to use the 
+                    enterprise administrator or device user doing any work.
+                        </xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+                <xs:element minOccurs="0" maxOccurs="1" name="constraint" type="stringConstraintType">
+                    <xs:annotation>
+                        <xs:documentation>
+                    The 'constraint' element defines the validation rules for the value 
+                    of the configuration setting. The EMM service uses these rules to make 
+                    sure values that the enterprise administrator enters on the admin console 
+                    are valid.
+                        </xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+            </xs:sequence>
+            <xs:attribute name="keyName" use="required" type="xs:string">
+                <xs:annotation>
+                    <xs:documentation>
+                    The attribute 'keyName' is the name of the key in the key-value pair 
+                    that the EMM service sends to the app. It must be globally unique.
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:attribute>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="stringArray">
+        <xs:annotation>
+            <xs:documentation>
+            The 'stringArray' element defines a key that you require the EMM service to send 
+            to the app in a key-value pair. The value must be a string array. 
+            </xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element minOccurs="0" maxOccurs="1" name="defaultValue" type="stringArrayValueType">
+                    <xs:annotation>
+                        <xs:documentation>
+                     The optional 'defaultValue' element specifies the default value for the
+                    EMM service to:  
+                    - display in the user interface control for the configuration setting. 
+                    - send to the app as the value in a key-value pair if the enterprise 
+                      administrator makes no change to the user interface control 
+                
+                    It contains one or more of the child elements 'value', 'userVariable', 
+                    or 'deviceVariable'.
+
+                    Setting a default value is recommended to make the app ready to use the 
+                    enterprise administrator or device user doing any work.
+                        </xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+                <xs:element minOccurs="0" maxOccurs="1" name="constraint" type="stringConstraintType">
+                    <xs:annotation>
+                        <xs:documentation>
+                    The 'constraint' element defines the validation rules for the value 
+                    of the configuration setting. The EMM service uses these rules to make 
+                    sure values that the enterprise administrator enters on the admin console 
+                    are valid.
+                        </xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+            </xs:sequence>
+            <xs:attribute name="keyName" use="required" type="xs:string">
+                <xs:annotation>
+                    <xs:documentation>
+                    The attribute 'keyName' is the name of the key in the key-value pair 
+                    that the EMM service sends to the app. It must be globally unique.
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:attribute>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="integer">
+        <xs:annotation>
+            <xs:documentation>
+            The 'integer' element defines a key that you require the EMM service to send 
+            to the app in a key-value pair. The value must be an integer.
+             </xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element minOccurs="0" maxOccurs="1" name="defaultValue" type="integerValueType">
+                    <xs:annotation>
+                        <xs:documentation>
+                     The optional 'defaultValue' element specifies the default value for the
+                    EMM service to:  
+                    - display in the user interface control for the configuration setting. 
+                    - send to the app as the value in a key-value pair if the enterprise 
+                      administrator makes no change to the user interface control 
+                
+                    It contains a child 'value' element.
+
+                    Setting a default value is recommended to make the app ready to use the 
+                    enterprise administrator or device user doing any work.
+                        </xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+                <xs:element minOccurs="0" maxOccurs="1" name="constraint" type="integerConstraintType">
+                    <xs:annotation>
+                        <xs:documentation>
+                    The 'constraint' element defines the validation rules for the value 
+                    of the configuration setting. The EMM service uses these rules to make 
+                    sure values that the enterprise administrator enters on the admin console 
+                    are valid.
+                        </xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+
+            </xs:sequence>
+            <xs:attribute name="keyName" use="required" type="xs:string">
+                <xs:annotation>
+                    <xs:documentation>
+                    The attribute 'keyName' is the name of the key in the key-value pair 
+                    that the EMM service sends to the app. It must be globally unique.
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:attribute>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="integerArray">
+        <xs:annotation>
+            <xs:documentation>
+            The 'integerArray' element defines a key that you require the EMM service to send 
+            to the app in a key-value pair. The value must be an integer array.
+            </xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element minOccurs="0" maxOccurs="1" name="defaultValue" type="integerArrayValueType">
+                    <xs:annotation>
+                        <xs:documentation>
+                     The optional 'defaultValue' element specifies the default value for the
+                    EMM service to:  
+                    - display in the user interface control for the configuration setting. 
+                    - send to the app as the value in a key-value pair if the enterprise 
+                      administrator makes no change to the user interface control 
+                
+                    It contains one or more child 'value' elements.
+
+                    Setting a default value is recommended to make the app ready to use the 
+                    enterprise administrator or device user doing any work.
+                        </xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+                <xs:element minOccurs="0" maxOccurs="1" name="constraint" type="integerConstraintType">
+                    <xs:annotation>
+                        <xs:documentation>
+                    The 'constraint' element defines the validation rules for the value 
+                    of the configuration setting. The EMM service uses these rules to make 
+                    sure values that the enterprise administrator enters on the admin console 
+                    are valid.
+                        </xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+
+            </xs:sequence>
+            <xs:attribute name="keyName" use="required" type="xs:string">
+                <xs:annotation>
+                    <xs:documentation>
+                    The attribute 'keyName' is the name of the key in the key-value pair 
+                    that the EMM service sends to the app. It must be globally unique.
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:attribute>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="float">
+        <xs:annotation>
+            <xs:documentation>
+            The 'float' element defines a key that you require the EMM service to send 
+            to the app in a key-value pair. The value must be a float.
+            </xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element minOccurs="0" maxOccurs="1" name="defaultValue" type="floatValueType">
+                    <xs:annotation>
+                        <xs:documentation>
+                     The optional 'defaultValue' element specifies the default value for the
+                    EMM service to:  
+                    - display in the user interface control for the configuration setting. 
+                    - send to the app as the value in a key-value pair if the enterprise 
+                      administrator makes no change to the user interface control 
+                
+                    It contains a child 'value' element.
+
+                    Setting a default value is recommended to make the app ready to use the 
+                    enterprise administrator or device user doing any work.
+                        </xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+                <xs:element minOccurs="0" maxOccurs="1" name="constraint" type="floatConstraintType">
+                    <xs:annotation>
+                        <xs:documentation>
+                    The 'constraint' element defines the validation rules for the value 
+                    of the configuration setting. The EMM service uses these rules to make 
+                    sure values that the enterprise administrator enters on the admin console 
+                    are valid.
+                        </xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+
+            </xs:sequence>
+            <xs:attribute name="keyName" use="required" type="xs:string">
+                <xs:annotation>
+                    <xs:documentation>
+                    The attribute 'keyName' is the name of the key in the key-value pair 
+                    that the EMM service sends to the app. It must be globally unique.
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:attribute>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="floatArray">
+        <xs:annotation>
+            <xs:documentation>
+            The 'floatArray' element defines a key that you require the EMM service to send 
+            to the app in a key-value pair. The value must be a float array.
+            </xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element minOccurs="0" maxOccurs="1" name="defaultValue" type="floatArrayValueType">
+                    <xs:annotation>
+                        <xs:documentation>
+                     The optional 'defaultValue' element specifies the default value for the
+                    EMM service to:  
+                    - display in the user interface control for the configuration setting. 
+                    - send to the app as the value in a key-value pair if the enterprise 
+                      administrator makes no change to the user interface control 
+                
+                    It contains one or more child 'value' elements.
+
+                    Setting a default value is recommended to make the app ready to use the 
+                    enterprise administrator or device user doing any work.
+                        </xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+                <xs:element minOccurs="0" maxOccurs="1" name="constraint" type="floatArrayConstraintType">
+                    <xs:annotation>
+                        <xs:documentation>
+                    The 'constraint' element defines the validation rules for the value 
+                    of the configuration setting. The EMM service uses these rules to make 
+                    sure values that the enterprise administrator enters on the admin console 
+                    are valid.
+                        </xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+
+            </xs:sequence>
+            <xs:attribute name="keyName" use="required" type="xs:string">
+                <xs:annotation>
+                    <xs:documentation>
+                    The attribute 'keyName' is the name of the key in the key-value pair 
+                    that the EMM service sends to the app. It must be globally unique.
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:attribute>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="date">
+        <xs:annotation>
+            <xs:documentation>
+            The 'date' element defines a key that you require the EMM service to send 
+            to the app in a key-value pair. The value must be a date in ISO-8601 format.
+            </xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element minOccurs="0" maxOccurs="1" name="defaultValue" type="dateValueType">
+                    <xs:annotation>
+                        <xs:documentation>
+                     The optional 'defaultValue' element specifies the default value for the
+                    EMM service to:  
+                    - display in the user interface control for the configuration setting. 
+                    - send to the app as the value in a key-value pair if the enterprise 
+                      administrator makes no change to the user interface control 
+                
+                    It contains a child 'value' element.
+
+                    Setting a default value is recommended to make the app ready to use the 
+                    enterprise administrator or device user doing any work.
+                        </xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+                <xs:element minOccurs="0" maxOccurs="1" name="constraint" type="dateConstraintType">
+                    <xs:annotation>
+                        <xs:documentation>
+                    The 'constraint' element defines the validation rules for the value 
+                    of the configuration setting. The EMM service uses these rules to make 
+                    sure values that the enterprise administrator enters on the admin console 
+                    are valid.
+                        </xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+            </xs:sequence>
+            <xs:attribute name="keyName" use="required" type="xs:string">
+                <xs:annotation>
+                    <xs:documentation>
+                    The attribute 'keyName' is the name of the key in the key-value pair 
+                    that the EMM service sends to the app. It must be globally unique.
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:attribute>
+        </xs:complexType>
+    </xs:element>
+    
+    <xs:element name="boolean">
+        <xs:annotation>
+            <xs:documentation>
+            The 'boolean' element defines a key that you require the EMM service to send 
+            to the app in a key-value pair. The value must be a boolean.
+            </xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element minOccurs="0" maxOccurs="1" name="defaultValue" type="booleanValueType">
+                    <xs:annotation>
+                        <xs:documentation>
+                     The optional 'defaultValue' element specifies the default value for the
+                    EMM service to:  
+                    - display in the user interface control for the configuration setting. 
+                    - send to the app as the value in a key-value pair if the enterprise 
+                      administrator makes no change to the user interface control 
+                
+                    It contains a child 'value' element.
+
+                    Setting a default value is recommended to make the app ready to use the 
+                    enterprise administrator or device user doing any work.
+                        </xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+                <xs:element minOccurs="0" maxOccurs="1" name="constraint" type="booleanConstraintType">
+                    <xs:annotation>
+                        <xs:documentation>
+                    The 'constraint' element defines the validation rules for the value 
+                    of the configuration setting. The EMM service uses these rules to make 
+                    sure values that the enterprise administrator enters on the admin console 
+                    are valid.
+                        </xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+            </xs:sequence>
+            <xs:attribute name="keyName" use="required" type="xs:string">
+                <xs:annotation>
+                    <xs:documentation>
+                    The attribute 'keyName' is the name of the key in the key-value pair 
+                    that the EMM service sends to the app. It must be globally unique.
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:attribute>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="userVariable">
+        <xs:annotation>
+            <xs:documentation>
+            The 'userVariable' element specifies the name of an EMM service user variable. 
+            The EMM service's admin console displays its name for the variable in the field 
+            for the configuration setting. When the EMM service delivers the key-value pair 
+            to your app, it delivers the variable's value for the device's user.
+            </xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+            <xs:attribute name="value" use="required">
+                <xs:simpleType>
+                    <xs:restriction base="xs:string">
+                        <!-- Common Name (CN) attribute extracted from the distinguished name. -->
+                        <xs:enumeration value="cn"/>
+                        <!-- The user's display name. -->
+                        <xs:enumeration value="displayName"/>
+                        <!-- Distinguished Name (DN). -->
+                        <xs:enumeration value="dn"/>
+                        <!-- The user's email address. -->
+                        <xs:enumeration value="emailAddress"/>
+                        <!-- The domain part of the email address (part after '@'). -->
+                        <xs:enumeration value="emailAddressDomain"/>
+                        <!-- The local part of the email address (part before '@').-->
+                        <xs:enumeration value="emailAddressLocalPart"/>
+                        <!-- The user's first name. -->
+                        <xs:enumeration value="firstName"/>
+                        <!-- The user's last name. -->
+                        <xs:enumeration value="lastName"/>
+                        <!-- The locale for the user (en-US). -->
+                        <xs:enumeration value="locale"/>
+                        <!-- Organizational Unit (OU) attribute extracted from the distinguished name. -->
+                        <xs:enumeration value="ou"/>
+                        <!-- The Microsoft sAMAccountName attribute. -->
+                        <xs:enumeration value="sAMAccountName"/>
+                        <!-- Login username ID. -->
+                        <xs:enumeration value="username"/>
+                        <!-- The Microsoft userPrincipalName attribute. -->
+                        <xs:enumeration value="upn"/>
+                    </xs:restriction>
+                </xs:simpleType>
+            </xs:attribute>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="deviceVariable">
+        <xs:annotation>
+            <xs:documentation>
+            The 'deviceVariable' element specifies the name of an EMM service device variable. 
+            The EMM service's admin console displays its name for the variable in the field 
+            for the configuration setting. When the EMM service delivers the key-value pair 
+            to your app, it delivers the variable's value for the device.
+            </xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+            <xs:attribute name="value" use="required">
+                <xs:simpleType>
+                    <xs:restriction base="xs:string">
+                        <!-- Integrated Circuit Card Identifier. -->
+                        <xs:enumeration value="iccid"/>
+                        <!-- International Mobile Equipment Identity. -->
+                        <xs:enumeration value="imei"/>
+                        <!-- International Mobile Subscriber Identity. -->
+                        <xs:enumeration value="imsi"/>
+                        <!-- Mobile Equipment Identifier. -->
+                        <xs:enumeration value="meid"/>
+                        <!-- The device model. -->
+                        <xs:enumeration value="model"/>
+                        <!-- The phone number.-->
+                        <xs:enumeration value="phoneNumber"/>
+                        <!-- The device serial number. -->
+                        <xs:enumeration value="serialNumber"/>
+                        <!-- iOS UDID. -->
+                        <xs:enumeration value="udid"/>
+                        <!-- WIFI Mac Address. -->
+                        <xs:enumeration value="wifiMacAddress"/>
+                    </xs:restriction>
+                </xs:simpleType>
+            </xs:attribute>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:complexType name="stringConstraintType">
+        <xs:sequence>
+            <xs:element minOccurs="0" maxOccurs="1" name="values">
+                <xs:annotation>
+                    <xs:documentation>
+                    The 'values' element contains a set of 'value' elements, which define
+                    the set of valid values for a string or string array configuration setting.
+                    Use a 'values' element when you want to give the enterprise administrator 
+                    a list of  valid values to choose from.    
+                    </xs:documentation>
+                </xs:annotation>
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="value" minOccurs="1" maxOccurs="unbounded" type="xs:string"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+        </xs:sequence>
+        <xs:attribute name="max" type="xs:int">
+            <xs:annotation>
+                <xs:documentation>
+                Use the 'max' attribute to specify the upper bound for the value of a 
+                'string' or 'stringArray' configuration setting.
+                'string'       - The maximum number of characters in the string.
+                'stringArray'  - The maximum number of elements in the string array.
+                </xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="min" type="xs:int">
+            <xs:annotation>
+                <xs:documentation>
+                Use the 'min' attribute to specify the lower bound for the value of a 
+                'string' or 'stringArray' configuration setting.
+                'string'       - The minimum number of characters in the string.
+                'stringArray'  - The minimum number of elements in the string array.
+                </xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="nullable" type="xs:boolean">
+            <xs:annotation>
+                <xs:documentation>
+                Set 'nullable' to true if you want to allow the value in the key-value pair 
+                to be null. The value of 'nullable' defaults to false.
+                </xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="pattern">
+            <xs:annotation>
+                <xs:documentation>
+                The attribute 'pattern' specifies the regular experession to use to
+                validate a string value of a key. If the 'pattern' attribute is
+                specified, the 'min' and 'max' attributes are ignored.
+                </xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+    </xs:complexType>
+
+    <xs:complexType name="integerConstraintType">
+        <xs:sequence>
+            <xs:element minOccurs="0" maxOccurs="1" name="values">
+                <xs:annotation>
+                    <xs:documentation>
+                    The 'values' element contains a set of 'value' elements, which define
+                    the set of valid values for an integer or integer array configuration setting.
+                    Use a 'values' element when you want to give the enterprise administrator 
+                    a list of  valid values to choose from.    
+                    </xs:documentation>
+                </xs:annotation>
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="value" maxOccurs="unbounded" type="xs:int"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+        </xs:sequence>
+        <xs:attribute name="max" type="xs:int">
+            <xs:annotation>
+                <xs:documentation>
+                Use the 'max' attribute to specify the upper bound for the value of an 
+                'integer' or 'integerArray' configuration setting.
+                'integer'        - The maximum integer value.
+                        'integerArray'     - The maximum number of elements in the integer array.
+                </xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="min" type="xs:int">
+            <xs:annotation>
+                <xs:documentation>
+                Use the 'min' attribute to specify the lower bound for the value of an 
+                'integer' or 'integerArray' configuration setting.
+                'integer'        - The minimum integer value.
+                        'integerArray'     - The minimum number of elements in the integer array.
+                </xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="nullable" type="xs:boolean">
+            <xs:annotation>
+                <xs:documentation>
+                Set 'nullable' to true if you want to allow the value in the key-value pair 
+                to be null. The value of 'nullable' defaults to false.
+                </xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+    </xs:complexType>
+
+    <xs:complexType name="floatConstraintType">
+        <xs:sequence>
+            <xs:element minOccurs="0" maxOccurs="1" name="values">
+                <xs:annotation>
+                    <xs:documentation>
+                    The 'values' element contains a set of 'value' elements, which define
+                    the set of valid values for a float configuration setting.
+                    Use a 'values' element when you want to give the enterprise administrator 
+                    a list of  valid values to choose from.    
+                    </xs:documentation>
+                </xs:annotation>
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="value" maxOccurs="unbounded" type="xs:float"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+        </xs:sequence>
+        <xs:attribute name="max" type="xs:float">
+            <xs:annotation>
+                <xs:documentation>
+                Use the 'max' attribute to specify the maximum value of a 
+                'float' configuration setting.
+                </xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="min" type="xs:float">
+            <xs:annotation>
+                <xs:documentation>
+                Use the 'min' attribute to specify the minimum value of a 
+                'float' configuration setting.
+                </xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="nullable" type="xs:boolean">
+            <xs:annotation>
+                <xs:documentation>
+                Set 'nullable' to true if you want to allow the value in the key-value pair 
+                to be null. The value of 'nullable' defaults to false.
+                </xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+    </xs:complexType>
+
+    <xs:complexType name="floatArrayConstraintType">
+        <xs:sequence>
+            <xs:element minOccurs="0" maxOccurs="1" name="values">
+                <xs:annotation>
+                    <xs:documentation>
+                     The 'values' element contains a set of 'value' elements, which define
+                    the set of valid values for a float array configuration setting.
+                    Use a 'values' element when you want to give the enterprise administrator 
+                    a list of  valid values to choose from.    
+                    </xs:documentation>
+                </xs:annotation>
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="value" maxOccurs="unbounded" type="xs:float"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+        </xs:sequence>
+        <xs:attribute name="max" type="xs:int">
+            <xs:annotation>
+                <xs:documentation>
+                Use the 'max' attribute to specify the maximum number of elements
+                in the float array.
+                </xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="min" type="xs:int">
+            <xs:annotation>
+                <xs:documentation>
+                 Use the 'min' attribute to specify the minimum number of elements
+                in the float array.
+                </xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="nullable" type="xs:boolean">
+            <xs:annotation>
+                <xs:documentation>
+                Set 'nullable' to true if you want to allow the value in the key-value pair 
+                to be null. The value of 'nullable' defaults to false.
+                </xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+    </xs:complexType>
+
+    <xs:complexType name="dateConstraintType">
+        <xs:attribute name="max" type="xs:dateTime">
+            <xs:annotation>
+                <xs:documentation>
+                Use the 'max' attribute to specify the maximum date for the value of a 
+                'date' configuration setting.
+                </xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="min" type="xs:dateTime">
+            <xs:annotation>
+                <xs:documentation>
+                Use the 'min' attribute to specify the minimum date for the value of a 
+                'date' configuration setting.
+                </xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="nullable" type="xs:boolean">
+            <xs:annotation>
+                <xs:documentation>
+                Set 'nullable' to true if you want to allow the value in the key-value pair 
+                to be null. The value of 'nullable' defaults to false.
+                </xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+    </xs:complexType>
+
+    <xs:complexType name="booleanConstraintType">
+        <xs:attribute name="nullable" type="xs:boolean">
+            <xs:annotation>
+                <xs:documentation>
+                 Set 'nullable' to true if you want to allow the value in the key-value pair 
+                to be null. The value of 'nullable' defaults to false.
+                </xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+    </xs:complexType>
+
+    <xs:complexType name="stringValueType">
+        <xs:choice>
+            <xs:element name="value" minOccurs="0" maxOccurs="1" type="xs:string">
+                <xs:annotation>
+                    <xs:documentation>
+                        The 'value' element can contain a simple static default string value.
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element ref="userVariable" minOccurs="0" maxOccurs="1"/>
+            <xs:element ref="deviceVariable" minOccurs="0" maxOccurs="1"/>
+        </xs:choice>
+    </xs:complexType>
+
+    <xs:complexType name="stringArrayValueType">
+        <xs:choice minOccurs="1" maxOccurs="unbounded">
+            <xs:element name="value" minOccurs="0" maxOccurs="unbounded" type="xs:string">
+                <xs:annotation>
+                    <xs:documentation>
+                        The 'value' element can contain a simple static default string value.
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element ref="userVariable" minOccurs="0" maxOccurs="unbounded"/>
+            <xs:element ref="deviceVariable" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:choice>
+    </xs:complexType>
+
+    <xs:complexType name="integerValueType">
+        <xs:choice>
+            <xs:element name="value" minOccurs="0" maxOccurs="1" type="xs:int">
+                <xs:annotation>
+                    <xs:documentation>
+                        The 'value' element can contain a simple static default integer value.
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:choice>
+    </xs:complexType>
+
+    <xs:complexType name="integerArrayValueType">
+        <xs:choice minOccurs="1" maxOccurs="unbounded">
+            <xs:element name="value" minOccurs="0" maxOccurs="unbounded" type="xs:int">
+                <xs:annotation>
+                    <xs:documentation>
+                        The 'value' element can contain a simple static default integer value.
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:choice>
+    </xs:complexType>
+
+    <xs:complexType name="floatValueType">
+        <xs:choice>
+            <xs:element name="value" minOccurs="0" maxOccurs="1" type="xs:float">
+                <xs:annotation>
+                    <xs:documentation>
+                        The 'value' element can contain a simple static default float value.
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:choice>
+    </xs:complexType>
+
+    <xs:complexType name="floatArrayValueType">
+        <xs:choice minOccurs="1" maxOccurs="unbounded">
+            <xs:element name="value" minOccurs="0" maxOccurs="unbounded" type="xs:float">
+                <xs:annotation>
+                    <xs:documentation>
+                        The 'value' element can contain a simple static default float value.
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:choice>
+    </xs:complexType>
+
+    <xs:complexType name="dateValueType">
+        <xs:choice>
+            <xs:element name="value" minOccurs="0" maxOccurs="1" type="xs:dateTime">
+                <xs:annotation>
+                    <xs:documentation>
+                        The 'value' element can contain a simple static default date value.
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:choice>
+    </xs:complexType>
+
+    <xs:complexType name="booleanValueType">
+        <xs:choice>
+            <xs:element name="value" minOccurs="0" maxOccurs="1" type="xs:boolean">
+                <xs:annotation>
+                    <xs:documentation>
+                        The 'value' element can contain a simple static default boolean value.
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:choice>
+    </xs:complexType>
+
+    <!-- ~~~~~~~~~~~~~ -->
+    <!-- PRESENTATION  -->
+    <!-- ~~~~~~~~~~~~~ -->
+    <xs:element name="presentation">
+        <xs:annotation>
+            <xs:documentation>
+            The 'presentation' element defines how you want the EMM service to display the 
+            configuration settings on the EMM service admin console.
+            </xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+            <xs:choice maxOccurs="unbounded">
+                <xs:element ref="fieldGroup" maxOccurs="unbounded"/>
+                <xs:element ref="field" maxOccurs="unbounded"/>
+            </xs:choice>
+            <xs:attribute name="defaultLocale" use="required" type="xs:language">
+                <xs:annotation>
+                    <xs:documentation>
+                    The 'defaultLocale' attribute specifies which 'language' element to use for
+                    localization if the 'label', 'description', 'option', or 'name' element does 
+                    not contain a 'language' element for the primary language of the admin console.
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:attribute>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="fieldGroup">
+        <xs:annotation>
+            <xs:documentation>
+            The 'fieldGroup' element defines a group of configuration settings (key elements such
+            as 'string', 'stringArray', 'integer', and so on) that are to be related on the admin
+            console. The admin console displays a group box control for the user interface fields
+            corresponding to the specified key elements.
+            </xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="name">
+                    <xs:annotation>
+                        <xs:documentation>
+                            The heading for the group of 'field' elements.
+                        </xs:documentation>
+                    </xs:annotation>
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element maxOccurs="unbounded" ref="language"/>
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+                <xs:element maxOccurs="unbounded" ref="field"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="field">
+        <xs:annotation>
+            <xs:documentation>
+            The 'field' element defines the admin console UI control for a configuration setting
+            (key element such as 'string', 'stringArray', 'integer', and so on). 
+            An attribute 'keyname' specifies    the corresponding key element.
+            </xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element minOccurs="0" maxOccurs="1" ref="label">
+                    <xs:annotation>
+                        <xs:documentation>
+                    The display name on the EMM service admin console of the UI control
+                    for the configuration setting.
+                        </xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+                <xs:element minOccurs="0" maxOccurs="1" ref="description"/>
+                <xs:element minOccurs="0" maxOccurs="1" ref="options"/>
+            </xs:sequence>
+            <xs:attribute name="keyName" use="required" type="xs:string">
+                <xs:annotation>
+                    <xs:documentation>
+                    The 'keyName' attribute must refer to a 'keyName' attribute of 
+                    of a key element (such as 'string', 'stringArray', 'integer', and so on)
+                    in the 'dict' element.
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:attribute>
+            <xs:attribute name="type" use="required">
+                <xs:simpleType>
+                    <xs:restriction base="xs:string">
+                        <xs:enumeration value="input">
+                            <xs:annotation>
+                                <xs:documentation>
+                                    HTML input element.
+                                </xs:documentation>
+                            </xs:annotation>
+                        </xs:enumeration>
+                        <xs:enumeration value="select">
+                            <xs:annotation>
+                                <xs:documentation>
+                                    HTML select element.
+                                </xs:documentation>
+                            </xs:annotation>
+                        </xs:enumeration>
+                        <xs:enumeration value="multiselect">
+                            <xs:annotation>
+                                <xs:documentation>
+                                    Control for selecting multiple items from a list.
+                                </xs:documentation>
+                            </xs:annotation>
+                        </xs:enumeration>
+                        <xs:enumeration value="checkbox">
+                            <xs:annotation>
+                                <xs:documentation>
+                                    HTML input element, type checkbox.
+                                </xs:documentation>
+                            </xs:annotation>
+                        </xs:enumeration>
+                        <xs:enumeration value="hidden">
+                            <xs:annotation>
+                                <xs:documentation>
+                                    HTML input element, type hidden.
+                                </xs:documentation>
+                            </xs:annotation>
+                        </xs:enumeration>
+                        <xs:enumeration value="datetime">
+                            <xs:annotation>
+                                <xs:documentation>
+                                    HTML input element, type datetime.
+                                </xs:documentation>
+                            </xs:annotation>
+                        </xs:enumeration>
+                        <xs:enumeration value="list">
+                            <xs:annotation>
+                                <xs:documentation>
+                                    Control for entering an array of values.
+                                </xs:documentation>
+                            </xs:annotation>
+                        </xs:enumeration>
+                    </xs:restriction>
+                </xs:simpleType>
+            </xs:attribute>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="label">
+        <xs:annotation>
+            <xs:documentation>
+            The 'label' element specifies the label of the configuration setting's UI control 
+            to be displayed     on the EMM service admin console.
+            </xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element maxOccurs="unbounded" ref="language"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="description">
+        <xs:annotation>
+            <xs:documentation>
+                The 'description' element specifies the description of the configuration setting's
+            UI control. The EMM service admin console displays the description with the UI control.
+            Provide information to help the enterprise administrator correctly configure the
+            configuration setting.
+            </xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element maxOccurs="unbounded" ref="language"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="options">
+        <xs:annotation>
+            <xs:documentation>
+                The 'options' element allows for specifying a picklist with localized display values.
+            It contains a list of 'option' elements, each of which specify localized option names
+            for an option in a select or multiselect UI control.
+            </xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element minOccurs="1" maxOccurs="unbounded" name="option">
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element maxOccurs="unbounded" ref="language"/>
+                        </xs:sequence>
+                        <xs:attribute name="selected" type="xs:boolean"/>
+                        <xs:attribute name="value" use="required"/>
+                    </xs:complexType>
+                </xs:element>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="language">
+        <xs:complexType>
+            <xs:simpleContent>
+                <xs:extension base="xs:string">
+                    <xs:attribute name="value" type="xs:language"/>
+                </xs:extension>
+            </xs:simpleContent>
+        </xs:complexType>
+    </xs:element>
+</xs:schema>
