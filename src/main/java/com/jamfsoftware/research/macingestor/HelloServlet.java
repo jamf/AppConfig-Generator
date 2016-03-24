@@ -32,7 +32,8 @@ public class HelloServlet {
 		label.put("en", "Test Input");
 		Map<String, String> description = new HashMap<String, String>();
 		description.put("en", "Test input to be used for testing the UI generation");
-		InputField field = new InputField("Test Input", label, description, "TestDefaultValue", null, null);
+		InputField field = new InputField("TestInputKey", label, description, "TestDefaultValue", null, null);
+		field.setNullable("false");
 		
 		return field;
 	}
