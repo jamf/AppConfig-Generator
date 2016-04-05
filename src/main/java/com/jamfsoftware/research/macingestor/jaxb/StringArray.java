@@ -8,11 +8,15 @@
 
 package com.jamfsoftware.research.macingestor.jaxb;
 
+import java.util.List;
+
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
+
+import com.jamfsoftware.research.macingestor.MACDataType;
 
 
 /**
@@ -42,7 +46,7 @@ import javax.xml.bind.annotation.XmlType;
     "constraint"
 })
 @XmlRootElement(name = "stringArray")
-public class StringArray {
+public class StringArray implements MACDataType {
 
     protected StringArrayValueType defaultValue;
     protected StringConstraintType constraint;
@@ -120,5 +124,38 @@ public class StringArray {
     public void setKeyName(java.lang.String value) {
         this.keyName = value;
     }
+
+	@Override
+	public java.lang.String getValidation() {
+		return "String Array Validation";
+	}
+
+	@Override
+	public List<java.lang.String> getDefaultValueList() {
+		try {
+			return (List<java.lang.String>)(Object)defaultValue.getValueOrUserVariableOrDeviceVariable();
+		} catch(Exception e) {
+			return null;
+		}
+	}
+
+	@Override
+	public boolean isUserOrDeviceVariable() {
+		try {
+			List<java.lang.String> defaults = (List<java.lang.String>)(Object)defaultValue.getValueOrUserVariableOrDeviceVariable();
+			return false;
+		} catch(ClassCastException e){
+			// will get here if user or device variables
+			return true;
+		} catch(Exception e) {
+			e.printStackTrace();
+			return false;
+		}
+	}
+
+	@Override
+	public java.lang.String getDefaultPresentationType() {
+		return "input";
+	}
 
 }

@@ -97,5 +97,4 @@ public class Language {
     public void setValueAttribute(java.lang.String value) {
         this.valueAttribute = value;
     }
-
 }

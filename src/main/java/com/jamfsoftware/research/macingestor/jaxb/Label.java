@@ -10,6 +10,8 @@ package com.jamfsoftware.research.macingestor.jaxb;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
+
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
@@ -73,6 +75,28 @@ public class Label {
             language = new ArrayList<Language>();
         }
         return this.language;
+    }
+    
+    public java.lang.String getLabel(Locale locale, java.lang.String defaultLocale){
+    	for(Language l : language ){
+    		if(l.getValueAttribute().equals(locale.toLanguageTag())){
+    			return l.getValue();
+    		}
+    	}
+    	
+    	for(Language l : language ){
+    		if(l.getValueAttribute().equals(locale.getLanguage())){
+    			return l.getValue();
+    		}
+    	}
+    	
+    	for(Language l : language ){
+    		if(l.getValueAttribute().equals(locale.getLanguage())){
+    			return l.getValue();
+    		}
+    	}
+    	
+    	return language.get(0).getValue();
     }
 
 }

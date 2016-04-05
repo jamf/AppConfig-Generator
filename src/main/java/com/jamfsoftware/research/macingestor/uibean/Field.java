@@ -24,8 +24,9 @@ public abstract class Field {
 		this.pattern = pattern;
 	}
 	
-	public abstract String getJspPage();
-	
+	public String getJspPage() {
+		return this.getClass().getSimpleName() + ".jsp";
+	}
 	
 	// getters and setters
 	public String getKeyName() {

@@ -8,11 +8,17 @@
 
 package com.jamfsoftware.research.macingestor.jaxb;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
+
+import com.jamfsoftware.research.macingestor.MACDataType;
+
 
 
 /**
@@ -42,7 +48,7 @@ import javax.xml.bind.annotation.XmlType;
     "constraint"
 })
 @XmlRootElement(name = "boolean")
-public class Boolean {
+public class Boolean implements MACDataType {
 
     protected BooleanValueType defaultValue;
     protected BooleanConstraintType constraint;
@@ -120,5 +126,27 @@ public class Boolean {
     public void setKeyName(java.lang.String value) {
         this.keyName = value;
     }
+
+	@Override
+	public java.lang.String getValidation() {
+		return "Boolean validation";
+	}
+
+	@Override
+	public List<java.lang.String> getDefaultValueList() {
+		List<java.lang.String> values = new ArrayList<>();
+		values.add(defaultValue.value.toString());
+		return values;
+	}
+
+	@Override
+	public boolean isUserOrDeviceVariable() {
+		return false;
+	}
+
+	@Override
+	public java.lang.String getDefaultPresentationType() {
+		return "checkbox";
+	}
 
 }

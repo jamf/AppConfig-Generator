@@ -8,11 +8,16 @@
 
 package com.jamfsoftware.research.macingestor.jaxb;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
+
+import com.jamfsoftware.research.macingestor.MACDataType;
 
 
 /**
@@ -42,7 +47,7 @@ import javax.xml.bind.annotation.XmlType;
     "constraint"
 })
 @XmlRootElement(name = "string")
-public class String {
+public class String implements MACDataType {
 
     protected StringValueType defaultValue;
     protected StringConstraintType constraint;
@@ -121,4 +126,35 @@ public class String {
         this.keyName = value;
     }
 
+    public java.lang.String getValidation(){
+    	java.lang.String attributes = "";
+    	
+    	if(constraint.isNullable()){
+    		attributes += "required ";
+    	}
+    	
+    	if(constraint.getPattern() != null){
+    		attributes += "pattern=\"" + constraint.getPattern()+"\" ";
+    	} else {
+    		
+    	}
+    	return "loller.java";
+    }
+
+	@Override
+	public List<java.lang.String> getDefaultValueList() {
+		List<java.lang.String> defaults = new ArrayList<java.lang.String>();
+		defaults.add(defaultValue.getValue());
+		return defaults;
+	}
+
+	@Override
+	public boolean isUserOrDeviceVariable() {
+		return defaultValue.getDeviceVariable() != null || defaultValue.getUserVariable() != null;
+	}
+
+	@Override
+	public java.lang.String getDefaultPresentationType() {
+		return "input";
+	}
 }

@@ -8,11 +8,15 @@
 
 package com.jamfsoftware.research.macingestor.jaxb;
 
+import java.util.List;
+
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
+
+import com.jamfsoftware.research.macingestor.MACDataType;
 
 
 /**
@@ -42,7 +46,7 @@ import javax.xml.bind.annotation.XmlType;
     "constraint"
 })
 @XmlRootElement(name = "floatArray")
-public class FloatArray {
+public class FloatArray implements MACDataType{
 
     protected FloatArrayValueType defaultValue;
     protected FloatArrayConstraintType constraint;
@@ -120,5 +124,26 @@ public class FloatArray {
     public void setKeyName(java.lang.String value) {
         this.keyName = value;
     }
+
+	@Override
+	public java.lang.String getValidation() {
+		return "Float Array Validation";
+	}
+
+	@Override
+	public List<java.lang.String> getDefaultValueList() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public boolean isUserOrDeviceVariable() {
+		return false;
+	}
+
+	@Override
+	public java.lang.String getDefaultPresentationType() {
+		return "input";
+	}
 
 }

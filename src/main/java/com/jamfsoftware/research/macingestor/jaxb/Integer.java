@@ -8,11 +8,16 @@
 
 package com.jamfsoftware.research.macingestor.jaxb;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
+
+import com.jamfsoftware.research.macingestor.MACDataType;
 
 
 /**
@@ -42,7 +47,7 @@ import javax.xml.bind.annotation.XmlType;
     "constraint"
 })
 @XmlRootElement(name = "integer")
-public class Integer {
+public class Integer implements MACDataType {
 
     protected IntegerValueType defaultValue;
     protected IntegerConstraintType constraint;
@@ -120,5 +125,28 @@ public class Integer {
     public void setKeyName(java.lang.String value) {
         this.keyName = value;
     }
+
+	@Override
+	public java.lang.String getValidation() {
+		return "Integer Validation";
+	}
+
+	@Override
+	public List<java.lang.String> getDefaultValueList() {
+		List<java.lang.String> values = new ArrayList<java.lang.String>();
+		values.add(defaultValue.getValue().toString());
+		return values;
+	}
+
+	@Override
+	public boolean isUserOrDeviceVariable() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public java.lang.String getDefaultPresentationType() {
+		return "input";
+	}
 
 }
