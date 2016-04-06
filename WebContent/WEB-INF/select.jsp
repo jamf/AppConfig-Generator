@@ -21,7 +21,7 @@
     			selected = "selected";
     		}
     	%>
-    	<option value="${option.getLanguageForLocale(pageContext.request.locale, defaultLocale)}" <%= selected %>>${option.value}</option>
+    	<option value="${option.value}" <%= selected %>>${option.getLanguageForLocale(pageContext.request.locale, defaultLocale)}</option>
     </c:forEach>
   </select>
   <small class="text-muted">${field.description.getDescription(pageContext.request.locale, defaultLocale) }</small>

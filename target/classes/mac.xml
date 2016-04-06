@@ -47,13 +47,13 @@
 				</values>
 			</constraint>
 		</float>
-		<string keyName="strkey1">
+		<string keyName="User CN">
 			<defaultValue>
 				<userVariable value="cn" />
 			</defaultValue>
 			<constraint nullable="true" pattern="CN=.*" />
 		</string>
-		<string keyName="strkey2">
+		<string keyName="Background Color">
 			<defaultValue>
 				<value>blue</value>
 			</defaultValue>
@@ -65,7 +65,19 @@
 				</values>
 			</constraint>
 		</string>
-		<integerArray keyName="intarraykey1">
+		<string keyName="Justin's Full Name">
+			<defaultValue>
+				<value>justin</value>
+			</defaultValue>
+			<constraint nullable="false" pattern="justin.*" />
+		</string>
+		<string keyName="Phone Number">
+			<defaultValue>
+				<value></value>
+			</defaultValue>
+			<constraint nullable="false" min="3" max="10" />
+		</string>
+		<integerArray keyName="Supported Disk Sizes">
 			<defaultValue>
 				<value>2048</value>
 			</defaultValue>
@@ -110,7 +122,7 @@
 	<presentation defaultLocale="en-US">
 		<fieldGroup>
 			<name>
-				<language value="en-US">Critial Settings</language>
+				<language value="en-US">Critical Settings</language>
 			</name>
 			<field keyName="boolkey1" type="checkbox">
 				<label>

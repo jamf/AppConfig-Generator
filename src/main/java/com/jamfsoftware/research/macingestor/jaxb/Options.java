@@ -204,26 +204,8 @@ public class Options {
             this.value = value;
         }
         
-        public java.lang.String getLanguageForLocale(Locale locale, java.lang.String defaultLocale){
-        	for(Language l : language ){
-        		if(l.getValueAttribute().equals(locale.toLanguageTag())){
-        			return l.getValue();
-        		}
-        	}
-        	
-        	for(Language l : language ){
-        		if(l.getValueAttribute().equals(locale.getLanguage())){
-        			return l.getValue();
-        		}
-        	}
-        	
-        	for(Language l : language ){
-        		if(l.getValueAttribute().equals(locale.getLanguage())){
-        			return l.getValue();
-        		}
-        	}
-        	
-        	return language.get(0).getValue();
+        public java.lang.String getLanguageForLocale(Locale locale, java.lang.String defaultLocale){      	
+        	return Language.getLanguageForLocale(locale, defaultLocale, language);
         }
     }
 }

@@ -132,19 +132,22 @@ public class IntegerArray implements MACDataType {
 
 	@Override
 	public List<java.lang.String> getDefaultValueList() {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
 	public boolean isUserOrDeviceVariable() {
-		// TODO Auto-generated method stub
 		return false;
 	}
 
 	@Override
 	public java.lang.String getDefaultPresentationType() {
 		return "input";
+	}
+
+	@Override
+	public Options getOptions() {
+		return null;
 	}
 
 }

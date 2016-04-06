@@ -18,6 +18,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 
 import com.jamfsoftware.research.macingestor.MACDataType;
+import com.jamfsoftware.research.macingestor.jaxb.Options.Option;
 
 
 /**
@@ -140,13 +141,42 @@ public class Integer implements MACDataType {
 
 	@Override
 	public boolean isUserOrDeviceVariable() {
-		// TODO Auto-generated method stub
 		return false;
 	}
 
 	@Override
 	public java.lang.String getDefaultPresentationType() {
+		if(constraint.values != null) { 
+			return "select";
+		}
+		
 		return "input";
+	}
+
+	@Override
+	public Options getOptions() {
+		try {
+			Options options = new Options();
+			for(java.lang.Integer f : constraint.getValues().value){
+				Option o = new Option();
+				o.setValue(f.toString());
+				o.setSelected(false);
+				
+				// set the language for display
+				List<Language> lang = new ArrayList<Language>();
+				Language l = new Language();
+				l.setValue(f.toString());
+				l.setValueAttribute("en-US");
+				lang.add(l);
+				o.language = lang;
+				
+				options.option.add(o);
+			}
+			return options;
+			
+		} catch (NullPointerException e){
+			return new Options();
+		}
 	}
 
 }

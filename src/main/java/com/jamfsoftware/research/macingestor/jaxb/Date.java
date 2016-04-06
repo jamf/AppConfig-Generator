@@ -147,4 +147,9 @@ public class Date implements MACDataType{
 		return "datetime";
 	}
 
+	@Override
+	public Options getOptions() {
+		return null;
+	}
+
 }

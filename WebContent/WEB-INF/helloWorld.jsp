@@ -4,8 +4,9 @@
 <html>
 <head>
 <style type="text/css">
-<%@include file ="bootstrap/css/bootstrap.css" %> 
-<%@include file="bootstrap/css/bootstrap-theme.css" %> 
+<%@include file ="../bootstrap/css/bootstrap.css" %> 
+<%@include file="../bootstrap/css/bootstrap-theme.css" %> 
+<%@include file="../parsley/parsley.css" %> 
 	form {
 		margin-right: 40px;
 		margin-left: 80px;
@@ -24,19 +25,10 @@
 	}
 </style>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<script src="bootstrap/js/jquery.js"></script>
+<script src="bootstrap/js/jquery.min.js"></script>
 <script src="bootstrap/js/bootstrap.js"></script>
-<script src="parsley.min.js"></script>
+<script src="parsley/parsley.min.js"></script>
 <script>
-$("#register_form").parsley({
-    successClass: "has-success",
-    errorClass: "has-error",
-    classHandler: function(el) {
-        return el.$element.closest(".form-group");
-    },
-    errorsWrapper: "<span class='help-block'></span>",
-    errorTemplate: "<span></span>"
-});
 </script>
 </head>
 <body>
@@ -54,20 +46,16 @@ $("#register_form").parsley({
 	</nav>
 	
 	
-	<form role="form">
+	<form role="form" data-parsley-validate>
 		<c:forEach var="field" items="${mac.presentation.fieldGroupOrField}">
 			<c:set var="defaultLocale" value="${mac.presentation.defaultLocale}" scope="request"></c:set>
 			<c:choose>
 	  			<c:when test="${field['class'].simpleName == 'Field' }">
 	  				<c:set var="field" value="${field}" scope="request"></c:set>
 	  				<c:set var="data" value="${datas.get(field.keyName)}" scope="request"></c:set>
-	  				<% 
-	  				Field f = (Field)request.getAttribute("field");
-	  				System.out.println("field type is: " + f.getType()); %>
 	  				<jsp:include page="${field.type}.jsp" />
 				</c:when>
 				<c:otherwise>
-					<% System.out.println("field group"); %>
 					<c:set var="group" value="${field}" scope="request"></c:set>
 					<jsp:include page="${group.type}.jsp" />
 				</c:otherwise>

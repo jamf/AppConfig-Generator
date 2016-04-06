@@ -78,25 +78,7 @@ public class Description {
     }
 
     public java.lang.String getDescription(Locale locale, java.lang.String defaultLocale){
-    	for(Language l : language ){
-    		if(l.getValueAttribute().equals(locale.toLanguageTag())){
-    			return l.getValue();
-    		}
-    	}
-    	
-    	for(Language l : language ){
-    		if(l.getValueAttribute().equals(locale.getLanguage())){
-    			return l.getValue();
-    		}
-    	}
-    	
-    	for(Language l : language ){
-    		if(l.getValueAttribute().equals(locale.getLanguage())){
-    			return l.getValue();
-    		}
-    	}
-    	
-    	return language.get(0).getValue();
+    	return Language.getLanguageForLocale(locale, defaultLocale, language);
     }
     
 }

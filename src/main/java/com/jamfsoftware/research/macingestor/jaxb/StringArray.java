@@ -158,4 +158,9 @@ public class StringArray implements MACDataType {
 		return "input";
 	}
 
+	@Override
+	public Options getOptions() {
+		return null;
+	}
+
 }

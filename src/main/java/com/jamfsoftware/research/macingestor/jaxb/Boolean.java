@@ -149,4 +149,9 @@ public class Boolean implements MACDataType {
 		return "checkbox";
 	}
 
+	@Override
+	public Options getOptions() {
+		return null;
+	}
+
 }

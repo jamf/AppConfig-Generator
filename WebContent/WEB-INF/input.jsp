@@ -7,6 +7,6 @@
 
 <div class="form-group">
   <label>${field.label.getLabel(pageContext.request.locale, defaultLocale) }</label>
-  <input type="text" class="form-control" id="${data.keyName}" value="${data.defaultValueList.get(0)}" >
+  <input type="text" class="form-control" id="${data.keyName}" value="${data.defaultValueList.get(0)}" ${data.validation } data-parsley-trigger="change" >
   <small class="text-muted">${field.description.getDescription(pageContext.request.locale, defaultLocale) }</small>
 </div>

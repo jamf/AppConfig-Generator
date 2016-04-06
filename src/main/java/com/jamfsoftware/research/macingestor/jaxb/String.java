@@ -18,6 +18,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 
 import com.jamfsoftware.research.macingestor.MACDataType;
+import com.jamfsoftware.research.macingestor.jaxb.Options.Option;
 
 
 /**
@@ -129,23 +130,33 @@ public class String implements MACDataType {
     public java.lang.String getValidation(){
     	java.lang.String attributes = "";
     	
-    	if(constraint.isNullable()){
-    		attributes += "required ";
+    	if(constraint.isNullable() != null && !constraint.isNullable()){
+    		attributes += "data-parsley-required=\"\" ";
     	}
     	
     	if(constraint.getPattern() != null){
     		attributes += "pattern=\"" + constraint.getPattern()+"\" ";
     	} else {
+    		if(constraint.min != null){
+    			attributes += "data-parsley-minLength=\"" + constraint.min + "\" ";
+    		}
     		
+    		if(constraint.max != null){
+    			attributes += "data-parsley-maxLength=\"" + constraint.max + "\" ";
+    		}
     	}
-    	return "loller.java";
+    	return attributes;
     }
 
 	@Override
 	public List<java.lang.String> getDefaultValueList() {
-		List<java.lang.String> defaults = new ArrayList<java.lang.String>();
-		defaults.add(defaultValue.getValue());
-		return defaults;
+		try { 
+			List<java.lang.String> defaults = new ArrayList<java.lang.String>();
+			defaults.add(defaultValue.getValue());
+			return defaults;
+		} catch (Exception e){
+			return null;
+		}
 	}
 
 	@Override
@@ -155,6 +166,37 @@ public class String implements MACDataType {
 
 	@Override
 	public java.lang.String getDefaultPresentationType() {
+		if(constraint.values != null) { 
+			return "select";
+		}
+		
 		return "input";
+	}
+
+	@Override
+	public Options getOptions() {
+		try {
+			Options options = new Options();
+			options.option = new ArrayList<Option>();
+			for(java.lang.String f : constraint.getValues().value){
+				Option o = new Option();
+				o.setValue(f.toString());
+				o.setSelected(false);
+				
+				// set the language for display
+				List<Language> lang = new ArrayList<Language>();
+				Language l = new Language();
+				l.setValue(f.toString());
+				l.setValueAttribute("en-US");
+				lang.add(l);
+				o.language = lang;
+				
+				options.option.add(o);
+			}
+			return options;
+			
+		} catch (NullPointerException e){
+			return new Options();
+		}
 	}
 }

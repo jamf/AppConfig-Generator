@@ -8,6 +8,7 @@
 
 package com.jamfsoftware.research.macingestor.jaxb;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.xml.bind.annotation.XmlAccessType;
@@ -17,6 +18,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 
 import com.jamfsoftware.research.macingestor.MACDataType;
+import com.jamfsoftware.research.macingestor.jaxb.Options.Option;
 
 
 /**
@@ -132,8 +134,13 @@ public class Float implements MACDataType{
 
 	@Override
 	public List<java.lang.String> getDefaultValueList() {
-		// TODO Auto-generated method stub
-		return null;
+		try {
+			List<java.lang.String> defaults = new ArrayList<java.lang.String>();
+			defaults.add(defaultValue.getValue().toString());
+			return defaults;
+		} catch (Exception e){
+			return null;
+		}
 	}
 
 	@Override
@@ -144,7 +151,38 @@ public class Float implements MACDataType{
 
 	@Override
 	public java.lang.String getDefaultPresentationType() {
+		if(constraint.values != null) { 
+			return "select";
+		}
+		
 		return "input";
+	}
+
+	@Override
+	public Options getOptions() {
+		try {
+			Options options = new Options();
+			options.option = new ArrayList<Option>();
+			for(java.lang.Float f : constraint.getValues().value){
+				Option o = new Option();
+				o.setValue(f.toString());
+				o.setSelected(false);
+				
+				// set the language for display
+				List<Language> lang = new ArrayList<Language>();
+				Language l = new Language();
+				l.setValue(f.toString());
+				l.setValueAttribute("en-US");
+				lang.add(l);
+				o.language = lang;
+				
+				options.option.add(o);
+			}
+			return options;
+			
+		} catch (NullPointerException e){
+			return new Options();
+		}
 	}
 
 }

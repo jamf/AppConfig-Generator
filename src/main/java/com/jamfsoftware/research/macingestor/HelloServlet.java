@@ -21,10 +21,6 @@ public class HelloServlet {
 	
 	@RequestMapping(method = RequestMethod.GET)
 	public String hello(ModelMap model) {
-//		List<Field> fields = new ArrayList<Field>();
-//		fields.add(generateInputField());
-//		fields.add(generateSelectField());
-//		model.addAttribute("fields", fields);
 		
 		JAXBReader<ManagedAppConfiguration> reader = new JAXBReader<ManagedAppConfiguration>(ManagedAppConfiguration.class);
 		ManagedAppConfiguration mac = reader.read(this.getClass().getClassLoader().getResourceAsStream("mac.xml"));
@@ -33,32 +29,6 @@ public class HelloServlet {
 		return "helloWorld";
 
 	}
-	
-//	private Field generateInputField(){
-//		Map<String, String> label = new HashMap<String, String>();
-//		label.put("en", "Test Input");
-//		Map<String, String> description = new HashMap<String, String>();
-//		description.put("en", "Test input to be used for testing the UI generation");
-//		TextField field = new TextField("TestInputKey", label, description, "TestDefaultValue", null, null);
-//		field.setNullable("false");
-//		field.setMin("3");
-//		
-//		return field;
-//	}
-//	
-//	private Field generateSelectField(){
-//		Map<String, String> label = new HashMap<String, String>();
-//		label.put("en", "Test Select Field");
-//		Map<String, String> description = new HashMap<String, String>();
-//		description.put("en", "Test select field to be used for testing the UI generation");
-//		List<String> possibleValues = new ArrayList<String>();
-//		possibleValues.add("Value1");
-//		possibleValues.add("Value2");
-//		possibleValues.add("Value3");
-//		SelectField field = new SelectField("TestSelectKey", label, description, "TestSelectValue", null, null);
-//		
-//		return field;
-//	}
 	
 	
 	private void prepareSchemaData(ManagedAppConfiguration mac, ModelMap model){
@@ -88,14 +58,14 @@ public class HelloServlet {
 				l.getLanguage().add(lang);
 				f.setLabel(l);
 				f.setKeyName(s);
+				f.setOptions(datas.get(s).getOptions());
 				
 				mac.getPresentation().getFieldGroupOrField().add(f);
 			}
 		}
 		
 		model.addAttribute("mac", mac);
-		model.addAttribute("datas", datas);
-		
+		model.addAttribute("datas", datas);	
 	}
 	
 	private boolean keynameExists(List<Object> fields, String keyname){

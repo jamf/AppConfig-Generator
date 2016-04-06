@@ -16,10 +16,6 @@
 	  			<c:when test="${field['class'].simpleName == 'Field' }">
 	  				<c:set var="field" value="${field}" scope="request"></c:set>
 	  				<c:set var="data" value="${datas.get(field.keyName)}" scope="request"></c:set>
-	  				<% 
-	  				MACDataType data = (MACDataType) request.getAttribute("data");
-	  				System.out.println(data.getKeyName());
-	  				%>
 	  				<jsp:include page="${field.type}.jsp" />
 				</c:when>
 				<c:otherwise>

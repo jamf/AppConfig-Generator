@@ -146,4 +146,9 @@ public class FloatArray implements MACDataType{
 		return "input";
 	}
 
+	@Override
+	public Options getOptions() {
+		return null;
+	}
+
 }

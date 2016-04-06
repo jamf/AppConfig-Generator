@@ -8,6 +8,9 @@
 
 package com.jamfsoftware.research.macingestor.jaxb;
 
+import java.util.List;
+import java.util.Locale;
+
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
@@ -96,5 +99,27 @@ public class Language {
      */
     public void setValueAttribute(java.lang.String value) {
         this.valueAttribute = value;
+    }
+    
+    public static java.lang.String getLanguageForLocale(Locale locale, java.lang.String defaultLocale, List<Language> language){
+    	for(Language l : language ){
+    		if(l.getValueAttribute().equals(locale.toLanguageTag())){
+    			return l.getValue();
+    		}
+    	}
+    	
+    	for(Language l : language ){
+    		if(l.getValueAttribute().equals(locale.getLanguage())){
+    			return l.getValue();
+    		}
+    	}
+    	
+    	for(Language l : language ){
+    		if(l.getValueAttribute().equals(locale.getLanguage())){
+    			return l.getValue();
+    		}
+    	}
+    	
+    	return language.get(0).getValue();
     }
 }
