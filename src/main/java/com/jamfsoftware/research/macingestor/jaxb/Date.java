@@ -127,18 +127,31 @@ public class Date implements MACDataType{
 
 	@Override
 	public java.lang.String getValidation() {
-		return "Date Validation";
+		java.lang.String attributes = "";
+		
+		if(constraint.isNullable() != null && !constraint.isNullable()){
+    		attributes += "data-parsley-required=\"\" ";
+    	}
+		
+		if(constraint.getMin() != null){
+			attributes += "data-parsley-min=\"" + constraint.getMin() + "\" ";
+		}
+		
+		if(constraint.getMax() != null){
+			attributes += "data-parsley-max=\"" + constraint.getMax() + "\" ";
+		}
+		
+		
+		return attributes;
 	}
 
 	@Override
 	public List<java.lang.String> getDefaultValueList() {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
 	public boolean isUserOrDeviceVariable() {
-		// TODO Auto-generated method stub
 		return false;
 	}
 

@@ -132,7 +132,6 @@ public class FloatArray implements MACDataType{
 
 	@Override
 	public List<java.lang.String> getDefaultValueList() {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
