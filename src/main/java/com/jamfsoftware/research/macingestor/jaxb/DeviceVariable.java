@@ -77,5 +77,20 @@ public class DeviceVariable {
     public void setValue(java.lang.String value) {
         this.value = value;
     }
+    
+    public java.lang.String getJSSVariableName(){
+    	switch(value){
+    		case "iccid": return "$ICCID";
+    		case "imei": return "$IMEI";
+    		case "imsi": return "$IMSI";
+    		case "meid": return "MEID";
+    		case "model": return "$MODEL";
+    		case "phoneNumber": return "$PHONE";
+    		case "serialNumber": return "$SERIALNUMBER";
+    		case "udid": return "$UDID";
+    		case "wifiMacAddress": return "$MACADDRESS";
+    		default: return null;
+    	}
+    }
 
 }

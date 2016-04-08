@@ -4,14 +4,10 @@
 <%@ page import="com.jamfsoftware.research.macingestor.jaxb.Options.Option" %>
 <%@ page import="com.jamfsoftware.research.macingestor.MACDataType" %>
 
-<%
-	
-
-%>
 
 <div class="form-group">
   <label>${field.label.getLabel(pageContext.request.locale, defaultLocale) }</label>
-  <select class="form-control" id="${field.keyName}">
+  <select class="form-control" id="${field.keyName}" name="${data.keyName}">
     <c:forEach var="option" items="${field.options.option}">
     	<c:set var="option" value="${option}" scope="request"></c:set>
     	<% Option o = (Option)(request.getAttribute("option")); 

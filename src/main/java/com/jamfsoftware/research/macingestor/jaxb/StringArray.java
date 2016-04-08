@@ -143,9 +143,12 @@ public class StringArray implements MACDataType {
 	public boolean isUserOrDeviceVariable() {
 		try {
 			List<java.lang.String> defaults = (List<java.lang.String>)(Object)defaultValue.getValueOrUserVariableOrDeviceVariable();
+			for(Object o : defaultValue.getValueOrUserVariableOrDeviceVariable()){
+				System.out.println(o.getClass().getSimpleName());
+			}
+			System.out.println("found" + defaults);
 			return false;
 		} catch(ClassCastException e){
-			// will get here if user or device variables
 			return true;
 		} catch(Exception e) {
 			e.printStackTrace();
@@ -155,6 +158,8 @@ public class StringArray implements MACDataType {
 
 	@Override
 	public java.lang.String getDefaultPresentationType() {
+		
+		if(isUserOrDeviceVariable()) return "hidden";
 		return "input";
 	}
 

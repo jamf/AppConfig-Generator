@@ -81,5 +81,24 @@ public class UserVariable {
     public void setValue(java.lang.String value) {
         this.value = value;
     }
+    
+    public java.lang.String getJSSVariableName(){
+    	switch(value){
+    		case "cn": return "$USERNAME";
+    		case "displayName": return "$FULLNAME";
+    		case "dn" : return "$FULLNAME";
+    		case "emailAddress": return "$EMAIL";
+    		case "emailAddressDomain" : return "$EMAIL";
+    		case "emailAddressLocalPart" : return "$EMAIL";
+    		case "firstName" : return "$FIRSTNAME";
+    		case "lastName": return "$LASTNAME";
+    		case "locale" : return "$LOCALE";
+    		case "ou" : return "$OU";
+    		case "sAMAccountName" : return "$USERNAME";
+    		case "username" : return "$USERNAME";
+    		case "upn" : return "$USERNAME";
+    		default : return null;
+    	}
+    }
 
 }

@@ -6,5 +6,5 @@
 
 
 <div class="form-group">
-  <input type="hidden" class="form-control" id="${data.keyName}" value="${data.defaultValueList.get(0)}" >
+  <input type="hidden" class="form-control" id="${data.keyName}" name="${data.keyName}" value="${data.defaultValueList.get(0)}" >
 </div>

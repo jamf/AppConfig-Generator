@@ -16,6 +16,6 @@
 			
 		}
 	%>
-  <label><input type="checkbox" name="${data.keyName}" value="1" <%= checked %> >${field.label.getLabel(pageContext.request.locale, defaultLocale) }</label>
+  <label><input type="checkbox" name="${data.keyName}" value="1" <%= checked %> name="${data.keyName}">${field.label.getLabel(pageContext.request.locale, defaultLocale) }</label>
   <input type="hidden" class="form-control" value="0" name="${data.keyName}">
 </div>

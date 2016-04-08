@@ -3,9 +3,10 @@
 <%@ page import="com.jamfsoftware.research.macingestor.jaxb.Field" %>
 <html>
 <head>
+<link href="../bootstrap/css/bootstrap.css" rel="stylesheet" media="screen">
 <style type="text/css">
-<%@include file ="../bootstrap/css/bootstrap.css" %> 
 <%@include file="../bootstrap/css/bootstrap-theme.css" %> 
+<%@include file="../bootstrap/css/bootstrap-tokenfield.min.css" %> 
 <%@include file="../parsley/parsley.css" %> 
 	form {
 		margin-right: 40px;
@@ -26,7 +27,9 @@
 </style>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <script src="bootstrap/js/jquery.min.js"></script>
+<script src="bootstrap/js/jquery-ui.min.js"></script>
 <script src="bootstrap/js/bootstrap.js"></script>
+<script src="bootstrap/js/bootstrap-tokenfield.min.js"></script>
 <script src="parsley/parsley.min.js"></script>
 <script>
 </script>

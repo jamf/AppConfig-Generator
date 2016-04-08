@@ -12,7 +12,7 @@
 
 	<servlet-mapping>
 		<servlet-name>springmvc-dispatcher</servlet-name>
-		<url-pattern>/helloWorld</url-pattern>
+		<url-pattern>/settings</url-pattern>
 	</servlet-mapping>
 	
 </web-app>

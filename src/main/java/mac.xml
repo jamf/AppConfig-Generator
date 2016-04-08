@@ -161,8 +161,7 @@
 				<language value="en-US">Email Address</language>
 			</label>
 			<description>
-				<language value="en-US">Please enter the user's email address.
-				</language>
+				<language value="en-US">Please enter the user's email address.</language>
 			</description>
 		</field>
 		<field keyName="datekey1" type="datetime">

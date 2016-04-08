@@ -16,8 +16,8 @@ import com.jamfsoftware.research.macingestor.jaxb.Language;
 import com.jamfsoftware.research.macingestor.jaxb.ManagedAppConfiguration;
 
 @Controller
-@RequestMapping("helloWorld")
-public class HelloServlet {
+@RequestMapping("/settings")
+public class SettingsServlet {
 	
 	@RequestMapping(method = RequestMethod.GET)
 	public String hello(ModelMap model) {
@@ -26,7 +26,7 @@ public class HelloServlet {
 		ManagedAppConfiguration mac = reader.read(this.getClass().getClassLoader().getResourceAsStream("mac.xml"));
 		prepareSchemaData(mac, model);
 		
-		return "helloWorld";
+		return "settings";
 
 	}
 	
@@ -41,14 +41,13 @@ public class HelloServlet {
         	datas.put(data.getKeyName(), data);
         }
 		
-		// TODO: Check for device/user variables
-			// for now, set defaultValue to be JSS processing variables
-		
-		
+
 		// Verify all MACDataTypes have a presentation Field entry
+		// also correct to hide default values
 		for(String s : datas.keySet()){
-			if(!keynameExists(mac.getPresentation().getFieldGroupOrField(), s)){
-				Field f = new Field();
+			Field f = findField(mac.getPresentation().getFieldGroupOrField(), s);
+			if(f == null){
+				f = new Field();
 				f.setType(datas.get(s).getDefaultPresentationType());
 				
 				Language lang = new Language();
@@ -61,6 +60,10 @@ public class HelloServlet {
 				f.setOptions(datas.get(s).getOptions());
 				
 				mac.getPresentation().getFieldGroupOrField().add(f);
+			} else {
+				if(datas.get(s).isUserOrDeviceVariable()){
+					f.setType("hidden");
+				}
 			}
 		}
 		
@@ -68,17 +71,19 @@ public class HelloServlet {
 		model.addAttribute("datas", datas);	
 	}
 	
-	private boolean keynameExists(List<Object> fields, String keyname){
+	
+	private Field findField(List<Object> fields, String keyname){
 		for(Object o : fields){
 			try{
 				Field f = (Field)o;
-				if(f.getKeyName().equals(keyname)) return true;
+				if(f.getKeyName().equals(keyname)) return f;
 			} catch(Exception e){
 				FieldGroup fg = (FieldGroup)o;
-				if(keynameExists((List<Object>)(Object)fg.getField(), keyname)) return true;
+				Field f = findField((List<Object>)(Object)fg.getField(), keyname);
+				if(f != null) return f;
 			}
 		}
-		return false;
+		return null;
 	}
 
 }

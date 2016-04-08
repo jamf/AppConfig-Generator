@@ -150,13 +150,19 @@ public class String implements MACDataType {
 
 	@Override
 	public List<java.lang.String> getDefaultValueList() {
+		List<java.lang.String> defaults = new ArrayList<java.lang.String>();
 		try { 
-			List<java.lang.String> defaults = new ArrayList<java.lang.String>();
-			defaults.add(defaultValue.getValue());
-			return defaults;
+			if(defaultValue.getDeviceVariable() != null){
+				defaults.add(defaultValue.getDeviceVariable().getJSSVariableName());
+			} else if (defaultValue.getUserVariable() != null){
+				defaults.add(defaultValue.getUserVariable().getJSSVariableName());
+			} else {
+				defaults.add(defaultValue.getValue());	
+			}
 		} catch (Exception e){
 			return null;
 		}
+		return defaults;
 	}
 
 	@Override
@@ -166,6 +172,10 @@ public class String implements MACDataType {
 
 	@Override
 	public java.lang.String getDefaultPresentationType() {
+		if(isUserOrDeviceVariable()){
+			return "hidden";
+		}
+		
 		if(constraint.values != null) { 
 			return "select";
 		}

@@ -142,7 +142,7 @@ public class IntegerArray implements MACDataType {
 
 	@Override
 	public java.lang.String getDefaultPresentationType() {
-		return "input";
+		return "list";
 	}
 
 	@Override
