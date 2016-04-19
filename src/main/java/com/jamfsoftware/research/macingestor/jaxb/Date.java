@@ -174,7 +174,7 @@ public class Date implements MACDataType{
 	public Object getPlistObject(java.lang.String[] submissions) {
 		System.out.println(submissions[0]);
 		try {
-			return new NSDate(submissions[0]);
+			return new NSDate(submissions[0] + ":00Z");
 		} catch (ParseException e) {
 			e.printStackTrace();
 		}
