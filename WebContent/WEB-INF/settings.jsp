@@ -49,7 +49,7 @@
 	</nav>
 	
 	
-	<form role="form" data-parsley-validate>
+	<form role="form" data-parsley-validate action="/submit">
 		<c:forEach var="field" items="${mac.presentation.fieldGroupOrField}">
 			<c:set var="defaultLocale" value="${mac.presentation.defaultLocale}" scope="request"></c:set>
 			<c:choose>

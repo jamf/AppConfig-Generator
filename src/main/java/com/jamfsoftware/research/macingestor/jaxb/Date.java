@@ -8,6 +8,8 @@
 
 package com.jamfsoftware.research.macingestor.jaxb;
 
+import java.text.ParseException;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.xml.bind.annotation.XmlAccessType;
@@ -16,6 +18,7 @@ import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 
+import com.dd.plist.NSDate;
 import com.jamfsoftware.research.macingestor.MACDataType;
 
 
@@ -147,7 +150,9 @@ public class Date implements MACDataType{
 
 	@Override
 	public List<java.lang.String> getDefaultValueList() {
-		return null;
+		List<java.lang.String> date = new ArrayList<java.lang.String>();
+		date.add(defaultValue.getValue().toString());
+		return date;
 	}
 
 	@Override
@@ -162,6 +167,18 @@ public class Date implements MACDataType{
 
 	@Override
 	public Options getOptions() {
+		return null;
+	}
+
+	@Override
+	public Object getPlistObject(java.lang.String[] submissions) {
+		System.out.println(submissions[0]);
+		try {
+			return new NSDate(submissions[0]);
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+		
 		return null;
 	}
 

@@ -8,6 +8,7 @@
 
 package com.jamfsoftware.research.macingestor.jaxb;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.xml.bind.annotation.XmlAccessType;
@@ -16,7 +17,9 @@ import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 
+import com.dd.plist.NSArray;
 import com.jamfsoftware.research.macingestor.MACDataType;
+import com.jamfsoftware.research.macingestor.jaxb.Options.Option;
 
 
 /**
@@ -127,13 +130,42 @@ public class StringArray implements MACDataType {
 
 	@Override
 	public java.lang.String getValidation() {
-		return "String Array Validation";
+		java.lang.String attributes = "";
+    	
+    	if(constraint.isNullable() != null && !constraint.isNullable()){
+    		attributes += "data-parsley-required=\"\" ";
+    	}
+    	
+    	if(constraint.getPattern() != null){
+    		attributes += "pattern=\"" + constraint.getPattern()+"\" ";
+    	} else {
+    		if(constraint.min != null){
+    			attributes += "data-parsley-minLength=\"" + constraint.min + "\" ";
+    		}
+    		
+    		if(constraint.max != null){
+    			attributes += "data-parsley-maxLength=\"" + constraint.max + "\" ";
+    		}
+    	}
+    	return attributes;
 	}
 
 	@Override
 	public List<java.lang.String> getDefaultValueList() {
+		
+		List<Object> vals = defaultValue.getValueOrUserVariableOrDeviceVariable();
+		List<java.lang.String> response = new ArrayList<java.lang.String>();
+		for(Object o : vals){
+			if(o instanceof DeviceVariable){
+				response.add(((DeviceVariable) o).getJSSVariableName());
+			} else if (o instanceof UserVariable){
+				response.add(((UserVariable) o).getJSSVariableName());
+			} else {
+				response.add(o.toString());
+			}
+		}
 		try {
-			return (List<java.lang.String>)(Object)defaultValue.getValueOrUserVariableOrDeviceVariable();
+			return response;
 		} catch(Exception e) {
 			return null;
 		}
@@ -142,14 +174,12 @@ public class StringArray implements MACDataType {
 	@Override
 	public boolean isUserOrDeviceVariable() {
 		try {
-			List<java.lang.String> defaults = (List<java.lang.String>)(Object)defaultValue.getValueOrUserVariableOrDeviceVariable();
 			for(Object o : defaultValue.getValueOrUserVariableOrDeviceVariable()){
-				System.out.println(o.getClass().getSimpleName());
+				if(o.getClass().getSimpleName().equals("UserVariable") || o.getClass().getSimpleName().equals("DeviceVariable")){
+					return true;
+				}
 			}
-			System.out.println("found" + defaults);
 			return false;
-		} catch(ClassCastException e){
-			return true;
 		} catch(Exception e) {
 			e.printStackTrace();
 			return false;
@@ -160,12 +190,43 @@ public class StringArray implements MACDataType {
 	public java.lang.String getDefaultPresentationType() {
 		
 		if(isUserOrDeviceVariable()) return "hidden";
-		return "input";
+		return "list";
 	}
 
 	@Override
 	public Options getOptions() {
-		return null;
+		try {
+			Options options = new Options();
+			options.option = new ArrayList<Option>();
+			for(java.lang.String f : constraint.getValues().value){
+				Option o = new Option();
+				o.setValue(f.toString());
+				o.setSelected(false);
+				
+				// set the language for display
+				List<Language> lang = new ArrayList<Language>();
+				Language l = new Language();
+				l.setValue(f.toString());
+				l.setValueAttribute("en-US");
+				lang.add(l);
+				o.language = lang;
+				
+				options.option.add(o);
+			}
+			return options;
+			
+		} catch (NullPointerException e){
+			return new Options();
+		}
+	}
+
+	@Override
+	public Object getPlistObject(java.lang.String[] submissions) {
+		NSArray array = new NSArray(submissions.length);
+		for(int i = 0; i < array.count(); i++){
+			array.setValue(i, submissions[i]);
+		}
+		return array;
 	}
 
 }

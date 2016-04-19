@@ -8,6 +8,7 @@
 
 package com.jamfsoftware.research.macingestor.jaxb;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.xml.bind.annotation.XmlAccessType;
@@ -16,7 +17,9 @@ import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 
+import com.dd.plist.NSArray;
 import com.jamfsoftware.research.macingestor.MACDataType;
+import com.jamfsoftware.research.macingestor.jaxb.Options.Option;
 
 
 /**
@@ -127,12 +130,32 @@ public class FloatArray implements MACDataType{
 
 	@Override
 	public java.lang.String getValidation() {
-		return "Float Array Validation";
+		java.lang.String attributes = "pattern=\"[0-9]+([\\.,][0-9]+)?\" ";
+		
+		if(constraint.isNullable() != null && !constraint.isNullable()){
+    		attributes += "data-parsley-required=\"\" ";
+    	}
+		
+		
+		if(constraint.getMin() != null){
+			attributes += "data-parsley-min=\"" + constraint.getMin() + "\" ";
+		}
+		
+		if(constraint.getMax() != null){
+			attributes += "data-parsley-max=\"" + constraint.getMax() + "\" ";
+		}
+		
+		
+		return attributes;
 	}
 
 	@Override
 	public List<java.lang.String> getDefaultValueList() {
-		return null;
+		List<java.lang.String> floats = new ArrayList<java.lang.String>();
+		for(java.lang.Float f: defaultValue.getValue()){
+			floats.add(f.toString());
+		}
+		return floats;
 	}
 
 	@Override
@@ -142,12 +165,44 @@ public class FloatArray implements MACDataType{
 
 	@Override
 	public java.lang.String getDefaultPresentationType() {
-		return "input";
+		return "list";
 	}
 
 	@Override
 	public Options getOptions() {
-		return null;
+		try {
+			Options options = new Options();
+			options.option = new ArrayList<Option>();
+			for(java.lang.Float f : constraint.getValues().value){
+				Option o = new Option();
+				o.setValue(f.toString());
+				o.setSelected(false);
+				
+				// set the language for display
+				List<Language> lang = new ArrayList<Language>();
+				Language l = new Language();
+				l.setValue(f.toString());
+				l.setValueAttribute("en-US");
+				lang.add(l);
+				o.language = lang;
+				
+				options.option.add(o);
+			}
+			return options;
+			
+		} catch (NullPointerException e){
+			return new Options();
+		}
+	}
+
+	@Override
+	public Object getPlistObject(java.lang.String[] submissions) {
+		NSArray array = new NSArray(submissions.length);
+		for(int i = 0; i < array.count(); i++){
+			array.setValue(i, java.lang.Float.parseFloat(submissions[i]));
+		}
+		
+		return array;
 	}
 
 }

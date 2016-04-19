@@ -129,7 +129,7 @@ public class Float implements MACDataType{
 
 	@Override
 	public java.lang.String getValidation() {
-		java.lang.String attributes = "";
+		java.lang.String attributes = "pattern=\"[0-9]+([\\.,][0-9]+)?\" ";
 		
 		if(constraint.isNullable() != null && !constraint.isNullable()){
     		attributes += "data-parsley-required=\"\" ";
@@ -198,6 +198,11 @@ public class Float implements MACDataType{
 		} catch (NullPointerException e){
 			return new Options();
 		}
+	}
+
+	@Override
+	public Object getPlistObject(java.lang.String[] submissions) {
+		return java.lang.Float.parseFloat(submissions[0]);
 	}
 
 }

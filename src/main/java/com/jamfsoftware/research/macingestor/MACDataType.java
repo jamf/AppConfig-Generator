@@ -12,5 +12,6 @@ public interface MACDataType {
 	public String getKeyName();
 	public String getDefaultPresentationType();
 	public Options getOptions();
+	public Object getPlistObject(String[] submissions);
 	
 }

@@ -129,7 +129,7 @@ public class Integer implements MACDataType {
 
 	@Override
 	public java.lang.String getValidation() {
-		java.lang.String attributes = "";
+		java.lang.String attributes = "data-parsley-type=\"integer\" ";
 		
 		if(constraint != null && constraint.isNullable() != null && !constraint.isNullable()){
     		attributes += "data-parsley-required=\"\" ";
@@ -161,9 +161,7 @@ public class Integer implements MACDataType {
 
 	@Override
 	public java.lang.String getDefaultPresentationType() {
-		System.out.println(keyName + " " + constraint);
 		if(constraint != null && constraint.values != null) {
-			System.out.println("choosing select");
 			return "select";
 		}
 		
@@ -194,6 +192,11 @@ public class Integer implements MACDataType {
 		} catch (NullPointerException e){
 			return new Options();
 		}
+	}
+
+	@Override
+	public Object getPlistObject(java.lang.String[] submissions) {
+		return java.lang.Integer.parseInt(submissions[0]);
 	}
 
 }

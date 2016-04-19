@@ -80,6 +80,7 @@
 		<integerArray keyName="Supported Disk Sizes">
 			<defaultValue>
 				<value>2048</value>
+				<value>1024</value>
 			</defaultValue>
 			<constraint>
 				<values>

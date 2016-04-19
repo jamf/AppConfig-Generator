@@ -129,7 +129,7 @@ public class Boolean implements MACDataType {
 
 	@Override
 	public java.lang.String getValidation() {
-		return "Boolean validation";
+		return " ";
 	}
 
 	@Override
@@ -152,6 +152,11 @@ public class Boolean implements MACDataType {
 	@Override
 	public Options getOptions() {
 		return null;
+	}
+
+	@Override
+	public Object getPlistObject(java.lang.String[] submissions) {
+		return submissions.length == 2 ? true : false;
 	}
 
 }

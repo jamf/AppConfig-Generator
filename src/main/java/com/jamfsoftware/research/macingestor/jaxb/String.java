@@ -209,4 +209,9 @@ public class String implements MACDataType {
 			return new Options();
 		}
 	}
+
+	@Override
+	public Object getPlistObject(java.lang.String[] submissions) {
+		return submissions[0];
+	}
 }
