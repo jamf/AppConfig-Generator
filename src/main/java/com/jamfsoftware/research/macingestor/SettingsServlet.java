@@ -1,5 +1,6 @@
 package com.jamfsoftware.research.macingestor;
 
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -10,6 +11,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.jamfsoftware.research.macingestor.jaxb.Field;
 import com.jamfsoftware.research.macingestor.jaxb.FieldGroup;
@@ -21,17 +24,19 @@ import com.jamfsoftware.research.macingestor.jaxb.ManagedAppConfiguration;
 @RequestMapping("/settings")
 public class SettingsServlet {
 	
-	@RequestMapping(method = RequestMethod.GET)
-	public String hello(ModelMap model, HttpServletRequest request) {
+	@RequestMapping(method = RequestMethod.POST)
+	public String hello(ModelMap model, HttpServletRequest request, @RequestParam("file") MultipartFile file) {
 		
 		JAXBReader<ManagedAppConfiguration> reader = new JAXBReader<ManagedAppConfiguration>(ManagedAppConfiguration.class);
-		ManagedAppConfiguration mac = reader.read(this.getClass().getClassLoader().getResourceAsStream("mac.xml"));
-		prepareSchemaData(mac, model);
-		
-		request.getSession().setAttribute("mac", mac);
+		try {
+			ManagedAppConfiguration mac = reader.read(file.getInputStream());
+			prepareSchemaData(mac, model);
+			request.getSession().setAttribute("mac", mac);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 		
 		return "settings";
-
 	}
 	
 	
