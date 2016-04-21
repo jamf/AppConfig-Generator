@@ -160,7 +160,7 @@ public class String implements MACDataType {
 				defaults.add(defaultValue.getValue());	
 			}
 		} catch (Exception e){
-			return null;
+			e.printStackTrace();
 		}
 		return defaults;
 	}
@@ -212,6 +212,10 @@ public class String implements MACDataType {
 
 	@Override
 	public Object getPlistObject(java.lang.String[] submissions) {
-		return submissions[0];
+		try { 
+			return submissions[0];
+		} catch (Exception e){
+			return "";
+		}
 	}
 }

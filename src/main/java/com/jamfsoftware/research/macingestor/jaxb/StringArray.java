@@ -164,11 +164,8 @@ public class StringArray implements MACDataType {
 				response.add(o.toString());
 			}
 		}
-		try {
-			return response;
-		} catch(Exception e) {
-			return null;
-		}
+		
+		return response;
 	}
 
 	@Override

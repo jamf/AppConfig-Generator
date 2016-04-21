@@ -196,7 +196,12 @@ public class Integer implements MACDataType {
 
 	@Override
 	public Object getPlistObject(java.lang.String[] submissions) {
-		return java.lang.Integer.parseInt(submissions[0]);
+		try{
+			return java.lang.Integer.parseInt(submissions[0]);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return "";
+		}
 	}
 
 }
