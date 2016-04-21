@@ -39,11 +39,6 @@
 	  <div class="container-fluid">
 	    <div class="navbar-header">
 	      <a class="navbar-brand" href="/">MAC Ingestor</a>
-	      <ul class="nav navbar-nav">
-		      <li><a href="#">Feel</a></li>
-		      <li><a href="#">The</a></li> 
-		      <li><a href="#">Bern</a></li> 
-    </ul>
 	    </div>
 	  </div>
 	</nav>
