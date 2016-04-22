@@ -130,7 +130,7 @@ public class FloatArray implements MACDataType{
 
 	@Override
 	public java.lang.String getValidation() {
-		java.lang.String attributes = "pattern=\"[0-9]+([\\.,][0-9]+)?\" ";
+		java.lang.String attributes = "pattern=\"(([1-9][0-9]*\\.?[0-9]*)|(\\.[0-9]+))([Ee][+-]?[0-9]+)?\" ";
 		
 		if(constraint.isNullable() != null && !constraint.isNullable()){
     		attributes += "data-parsley-required=\"\" ";

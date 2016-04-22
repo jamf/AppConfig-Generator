@@ -32,7 +32,7 @@ public class SubmitServlet {
 			e.printStackTrace();
 		}
 
-		return null;
+		return "";
 
 	}
 	
@@ -40,8 +40,6 @@ public class SubmitServlet {
 	public String generatePlist(HttpServletRequest request){
 		ManagedAppConfiguration mac = (ManagedAppConfiguration)request.getSession().getAttribute("mac");
 		NSDictionary plist = new NSDictionary();
-		System.out.println(request.getParameterMap());
-		System.out.println(request.getParameter("datekey1"));
 		for(Object o : mac.getDict().getStringOrStringArrayOrInteger()){
 			MACDataType data = (MACDataType)o;
 			plist.put(data.getKeyName(), data.getPlistObject(request.getParameterValues(data.getKeyName())));

@@ -8,22 +8,6 @@
 <%@include file="../bootstrap/css/bootstrap-theme.css" %> 
 <%@include file="../bootstrap/css/bootstrap-tokenfield.min.css" %> 
 <%@include file="../parsley/parsley.css" %> 
-	form {
-		margin-right: 40px;
-		margin-left: 80px;
-	}
-
-	@media ( max-width : 980px) {
-		body {
-			padding-top: 0;
-		}
-	}
-	
-	legend.scheduler-border {
-    	width:inherit; /* Or auto */
-    	padding:0 10px; /* To give a bit of padding on the left and right */
-    	border-bottom:none;
-	}
 </style>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <script src="bootstrap/js/jquery.min.js"></script>
@@ -43,6 +27,19 @@
 	  </div>
 	</nav>
 	
+	<div class="container">
+	<h1 class="text-center">Managed Application Configuration Ingestor</h1> <br>
+		<p class="lead">The Managed App Configuration Ingestor is a tool which assists in the generation of configuration plist for a mobile app on a device
+			enrolled in an MDM solution. Follow the steps below to get started:</p>
+			<ol>
+			<li class="lead">Obtain a Managed App Configuration schema file from the application developer</li>
+			<li class="lead">Upload the schema file in the form below</li>
+				<li class="lead">Fill out the presented configuration options</li>
+			<li class="lead">Download the plist configuration file</li>
+			<li class="lead">Upload the plist to your MDM provider to be installed onto the device</li>
+		</ol>
+		
+		<br>
 	
 	<form role="form" data-parsley-validate action="/submit">
 		<c:forEach var="field" items="${mac.presentation.fieldGroupOrField}">
@@ -59,9 +56,10 @@
 				</c:otherwise>
 			</c:choose>
 		</c:forEach>
-		<button type="submit" class="btn btn-default">Submit</button>
+		<button type="submit" class="btn btn-default">Download Plist</button>
 	</form>
 	
+	</div>
 	
 </body>
 </html>
