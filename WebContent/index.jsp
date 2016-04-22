@@ -10,9 +10,35 @@
 <%@ include file="parsley/parsley.css" %> 
 <%@ include file="fileinput/css/fileinput.min.css" %> 
 
-.col-centered{
-    float: none;
-    margin: 0 auto;
+html {
+  position: relative;
+  min-height: 100%;
+}
+body {
+  /* Margin bottom by footer height */
+  margin-bottom: 60px;
+}
+.footer {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  /* Set the fixed height of the footer here */
+  height: 60px;
+  background-color: #f5f5f5;
+}
+
+.vertical-center {
+  min-height: 100%;  /* Fallback for browsers do NOT support vh unit */
+  min-height: 100vh; /* These two lines are counted as one :-)       */
+
+  display: flex;
+  align-items: center;
+}
+
+.center-text-trick {
+  height: 50px;
+  line-height: 60px;
+  white-space: nowrap;
 }
 </style>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -52,6 +78,12 @@
 		
 	</div>
       
-	</div>	
+	</div>
+	
+	<footer class="footer">
+      <div class="container">
+        <p class="text-muted text-center center-text-trick">Copyright &copy; JAMF Research</p>
+      </div>
+    </footer>	
 </body>
 </html>
