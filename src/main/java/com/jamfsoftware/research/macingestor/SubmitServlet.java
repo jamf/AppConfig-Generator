@@ -22,7 +22,7 @@ import com.jamfsoftware.research.macingestor.jaxb.ManagedAppConfiguration;
 public class SubmitServlet {
 	
 	@RequestMapping(method = RequestMethod.GET, produces=MediaType.APPLICATION_OCTET_STREAM_VALUE)
-	public String hello(HttpServletRequest request, HttpServletResponse response) {		
+	public String submit(HttpServletRequest request, HttpServletResponse response) {		
 		response.setContentType("application/force-download");
 		response.addHeader("Content-Disposition","attachment; filename=\"mac.plist\"");
 		Reader reader = new StringReader(generatePlist(request));
@@ -32,7 +32,7 @@ public class SubmitServlet {
 			e.printStackTrace();
 		}
 
-		return "";
+		return null;
 
 	}
 	

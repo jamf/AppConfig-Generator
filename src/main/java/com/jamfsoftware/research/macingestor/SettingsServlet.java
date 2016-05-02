@@ -19,13 +19,14 @@ import com.jamfsoftware.research.macingestor.jaxb.FieldGroup;
 import com.jamfsoftware.research.macingestor.jaxb.Label;
 import com.jamfsoftware.research.macingestor.jaxb.Language;
 import com.jamfsoftware.research.macingestor.jaxb.ManagedAppConfiguration;
+import com.jamfsoftware.research.macingestor.jaxb.Presentation;
 
 @Controller
 @RequestMapping("/settings")
 public class SettingsServlet {
 	
 	@RequestMapping(method = RequestMethod.POST)
-	public String hello(ModelMap model, HttpServletRequest request, @RequestParam("file") MultipartFile file) {
+	public String prepareSettings(ModelMap model, HttpServletRequest request, @RequestParam("file") MultipartFile file) {
 		
 		JAXBReader<ManagedAppConfiguration> reader = new JAXBReader<ManagedAppConfiguration>(ManagedAppConfiguration.class);
 		try {
@@ -49,6 +50,11 @@ public class SettingsServlet {
         	MACDataType data = (MACDataType)o;
         	datas.put(data.getKeyName(), data);
         }
+		
+		// ensure the Presentation field exists
+		if(mac.getPresentation() == null){
+			mac.setPresentation(new Presentation());
+		}
 		
 
 		// Verify all MACDataTypes have a presentation Field entry

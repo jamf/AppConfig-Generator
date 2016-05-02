@@ -17,6 +17,8 @@ import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 
+import org.json.JSONArray;
+
 import com.jamfsoftware.research.macingestor.MACDataType;
 import com.jamfsoftware.research.macingestor.jaxb.Options.Option;
 
@@ -145,7 +147,23 @@ public class String implements MACDataType {
     			attributes += "data-parsley-maxLength=\"" + constraint.max + "\" ";
     		}
     	}
+    	    	
     	return attributes;
+    }
+    
+    private java.lang.String getJSONArrayOptions(){
+    	JSONArray array = new JSONArray();
+    	
+    	try {
+    		for(java.lang.String value : constraint.getValues().getValue()){
+    			array.put(value);
+    		}
+    	} catch (Exception e){
+    		e.printStackTrace();
+    		return null;
+    	}
+    	
+    	return array.toString();
     }
 
 	@Override

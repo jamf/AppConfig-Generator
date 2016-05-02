@@ -82,7 +82,7 @@ body {
 	
 	<footer class="footer">
       <div class="container">
-        <p class="text-muted text-center center-text-trick">Copyright &copy; JAMF Research</p>
+        <p class="text-muted text-center center-text-trick">Copyright &copy; 2016 JAMF Software, LLC</p>
       </div>
     </footer>	
 </body>

@@ -1,0 +1,100 @@
+<managedAppConfiguration>
+	<version>1</version>
+	<bundleId>com.wandera</bundleId>
+	<dict>
+		<string keyName="customerId">
+			<defaultValue>
+				<value></value>
+			</defaultValue>
+			<constraint nullable="false" />
+		</string>
+		<string keyName="secretKey">
+			<defaultValue>
+				<value></value>
+			</defaultValue>
+			<constraint nullable="false" />
+		</string>
+		<string keyName="apiKey">
+			<defaultValue>
+				<value></value>
+			</defaultValue>
+			<constraint nullable="false" />
+		</string>
+
+		<string keyName="externalId">
+			<defaultValue>
+				<userVariable value="udid" />
+			</defaultValue>
+			<constraint nullable="false" />
+		</string>
+
+		<string keyName="externalId">
+			<defaultValue>
+				<deviceVariable value="udid" />
+			</defaultValue>
+			<constraint nullable="false" />
+		</string>
+
+		<string keyName="email">
+			<defaultValue>
+				<userVariable value="emailAddress" />
+			</defaultValue>
+			<constraint nullable="false" />
+		</string>
+
+		<string keyName="firstName">
+			<defaultValue>
+				<userVariable value="displayName" />
+			</defaultValue>
+			<constraint nullable="false" />
+		</string>
+
+		<string keyName="lastName">
+			<defaultValue>
+				<userVariable value="displayName" />
+			</defaultValue>
+			<constraint nullable="false" />
+		</string>
+
+		<string keyName="activationType">
+			<defaultValue>
+				<value>PROVISION_THEN_AWP</value>
+			</defaultValue>
+			<constraint nullable="false" />
+		</string>
+	</dict>
+		<presentation defaultLocale="en-US">
+		<field keyName="activationType" type="input">
+			<label>
+				<language value="en-US">Activation Type</language>
+			</label>
+			<description>
+				<language value="en-US">The type of activation to be used once installed.</language>
+			</description>
+		</field>
+		<field keyName="secretKey" type="input">
+			<label>
+				<language value="en-US">Secret Key</language>
+			</label>
+			<description>
+				<language value="en-US">Secret Key used encrypt communication.</language>
+			</description>
+		</field>
+		<field keyName="apiKey" type="input">
+			<label>
+				<language value="en-US">API Key</language>
+			</label>
+			<description>
+				<language value="en-US">API Token to authenticate when making API Requests.</language>
+			</description>
+		</field>
+		<field keyName="customerId" type="input">
+			<label>
+				<language value="en-US">Customer ID</language>
+			</label>
+			<description>
+				<language value="en-US">Unique ID token for the customer.</language>
+			</description>
+		</field>
+	</presentation>
+</managedAppConfiguration>

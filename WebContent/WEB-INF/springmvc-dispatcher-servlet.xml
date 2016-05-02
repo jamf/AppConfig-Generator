@@ -18,7 +18,6 @@
 		</property>
 	</bean>
 	
-	
 	<mvc:annotation-driven />
 
 </beans>  

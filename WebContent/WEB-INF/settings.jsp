@@ -24,6 +24,7 @@ body {
   /* Set the fixed height of the footer here */
   height: 60px;
   background-color: #f5f5f5;
+  
 }
 
 .vertical-center {
@@ -47,6 +48,7 @@ body {
 <script src="bootstrap/js/bootstrap-tokenfield.min.js"></script>
 <script src="parsley/parsley.min.js"></script>
 <script>
+
 </script>
 </head>
 <body>
@@ -65,7 +67,7 @@ body {
 			<ol>
 			<li class="lead">Obtain a Managed App Configuration schema file from the application developer</li>
 			<li class="lead">Upload the schema file in the form below</li>
-				<li class="lead">Fill out the presented configuration options</li>
+			<li class="lead">Fill out the presented configuration options</li>
 			<li class="lead">Download the plist configuration file</li>
 			<li class="lead">Upload the plist to your MDM provider to be installed onto the device</li>
 		</ol>
@@ -94,7 +96,7 @@ body {
 	
 	<footer class="footer">
       <div class="container">
-        <p class="text-muted text-center center-text-trick">Copyright &copy; JAMF Research</p>
+        <p class="text-muted text-center center-text-trick">Copyright &copy; 2016 JAMF Software, LLC</p>
       </div>
     </footer>	
 </body>
