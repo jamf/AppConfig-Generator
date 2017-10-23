@@ -72,7 +72,7 @@ body {
 			<li class="lead">Upload the plist to your MDM provider to be installed onto the device</li>
 		</ol>
 		
-		<form role="form" enctype="multipart/form-data" action="/settings" method="post" class="center-block" role="form">
+		<form role="form" enctype="multipart/form-data" action="settings" method="post" class="center-block" role="form">
 					<input id="input-1" type="file" class="file" name="file" data-show-preview="false" data-show-remove="false" data-upload-Label="Configure">
 		</form>
 		

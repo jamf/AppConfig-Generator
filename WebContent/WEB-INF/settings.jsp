@@ -3,7 +3,7 @@
 <%@ page import="com.jamfsoftware.research.macingestor.jaxb.Field" %>
 <html>
 <head>
-<link href="../bootstrap/css/bootstrap.css" rel="stylesheet" media="screen">
+<link href="bootstrap/css/bootstrap.css" rel="stylesheet" media="screen">
 <style type="text/css">
 <%@include file="../bootstrap/css/bootstrap-theme.css" %> 
 <%@include file="../bootstrap/css/bootstrap-tokenfield.min.css" %> 
@@ -74,7 +74,7 @@ body {
 		
 		<br>
 	
-	<form role="form" data-parsley-validate action="/submit">
+	<form role="form" data-parsley-validate action="submit">
 		<c:forEach var="field" items="${mac.presentation.fieldGroupOrField}">
 			<c:set var="defaultLocale" value="${mac.presentation.defaultLocale}" scope="request"></c:set>
 			<c:choose>
