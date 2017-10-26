@@ -76,7 +76,7 @@
 
 	<form action="settings" method="post">
 		<select name="file">
-			<c:forEach items="${list}" var="item">
+			<c:forEach items="${files}" var="item">
 				<option value="${item.key}">${item.value}</option>
 			</c:forEach>
 		</select>

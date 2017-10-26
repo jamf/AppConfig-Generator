@@ -1,5 +1,12 @@
 package com.jamfsoftware.research.macingestor;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.ProtocolException;
+import java.net.URL;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -17,6 +24,11 @@ public class SpecfileServlet {
 
 	@RequestMapping(method = RequestMethod.GET)
 	public String index(HttpServletRequest request, HttpServletResponse response, ModelMap model) {
+		model.addAttribute("files", specfiles());
+		return "specfiles";
+	}
+
+	private Map<String, String> specfiles() {
 		Map<String,String> country = new LinkedHashMap<>();
 
 		// TODO: replace sample data
@@ -25,8 +37,32 @@ public class SpecfileServlet {
 		country.put("SG", "Singapore");
 		country.put("MY", "Malaysia");
 
-		model.addAttribute("list", country);
-		return "specfiles";
+		System.out.println(getRequest());
+
+		return country;
 	}
 
+	public String getRequest() {
+		try {
+			URL url = new URL("https://d2e3kgnhdeg083.cloudfront.net");
+			HttpURLConnection con = (HttpURLConnection) url.openConnection();
+			con.setRequestMethod("GET");
+
+			BufferedReader in = new BufferedReader(new InputStreamReader(con.getInputStream()));
+			String inputLine;
+			StringBuffer content = new StringBuffer();
+			while ((inputLine = in.readLine()) != null) {
+				content.append(inputLine);
+			}
+			in.close();
+
+			con.disconnect();
+
+			return String.valueOf(content);
+		} catch(IOException e) {
+			e.printStackTrace();
+		}
+
+		return "";
+	}
 }
