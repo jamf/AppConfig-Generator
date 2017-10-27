@@ -77,7 +77,7 @@
 	<form action="settings" method="post">
 		<select name="file">
 			<c:forEach items="${files}" var="item">
-				<option value="${item.key}">${item.value}</option>
+				<option value="${item.getBundleId()}-${item.getVersion()}">${item.getResourceLocation()}</option>
 			</c:forEach>
 		</select>
 		<input type="submit">
