@@ -3,8 +3,8 @@ package com.jamfsoftware.research.macingestor;
 import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.util.LinkedHashMap;
-import java.util.Map;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -17,9 +17,9 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.w3c.dom.Document;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
-import org.xml.sax.XMLReader;
-import org.xml.sax.helpers.XMLReaderFactory;
 
 @Controller
 @RequestMapping("/specfiles")
@@ -31,19 +31,37 @@ public class SpecfileServlet {
 		return "specfiles";
 	}
 
-	private Map<String, String> specfiles() {
-		Map<String,String> country = new LinkedHashMap<>();
+	private List<Specfile> specfiles() {
+//		Map<String,String> specfiles = new LinkedHashMap<>();
 
-		// TODO: replace sample data
-		country.put("US", "United States");
-		country.put("CHINA", "China");
-		country.put("SG", "Singapore");
-		country.put("MY", "Malaysia");
+//		// TODO: replace sample data
+//		country.put("US", "United States");
+//		country.put("CHINA", "China");
+//		country.put("SG", "Singapore");
+//		country.put("MY", "Malaysia");
 
 		String specfileRepository = "https://d2e3kgnhdeg083.cloudfront.net";
 		Document specfileXML = getSpecfileXML(specfileRepository);
+		NodeList list = specfileXML.getDocumentElement().getElementsByTagName("Contents");
 
-		return country;
+		List<Specfile> specfiles = new ArrayList<>();
+		for(int i = 0; i < list.getLength(); i++) {
+			Node n = list.item(i);
+
+			// value of <Key> element: <Contents><Key>com.bundle.id</Key></Contents>
+			String specfileName = n.getFirstChild().getFirstChild().getNodeValue();
+			String[] specfileNameSegments = specfileName.split("/");
+			//			System.out.println(Arrays.toString(specfileNameSegments));
+
+			String specfileResourceLocation = specfileRepository + "/" + specfileName;
+			String specfileBundleId = specfileNameSegments[0];
+			String specfileVersion = specfileNameSegments[1];
+
+			Specfile specfile = new Specfile(specfileBundleId, specfileVersion, specfileResourceLocation);
+			specfiles.add(specfile);
+		}
+
+		return specfiles;
 	}
 
 	public Document getSpecfileXML(String repository) {
@@ -58,7 +76,7 @@ public class SpecfileServlet {
 			DocumentBuilder db = dbf.newDocumentBuilder();
 
 			Document xml = db.parse(con.getInputStream());
-			xml.getDocumentElement().normalize();
+//			xml.getDocumentElement().normalize();
 
 			con.disconnect();
 
