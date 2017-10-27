@@ -1,6 +1,8 @@
 package com.jamfsoftware.research.macingestor;
 
 import java.io.IOException;
+import java.io.InputStream;
+import java.net.URL;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -38,6 +40,24 @@ public class SettingsServlet {
 		}
 		
 		return "settings";
+	}
+
+	@RequestMapping(value = "/repository", method = RequestMethod.POST)
+	public String prepareSettingsFromRepository(ModelMap model, HttpServletRequest request, @RequestParam("file") String fileLocation) {
+
+		JAXBReader<ManagedAppConfiguration> reader = new JAXBReader<ManagedAppConfiguration>(ManagedAppConfiguration.class);
+		try {
+			InputStream fileInputStream = new URL(fileLocation).openStream();
+
+			ManagedAppConfiguration mac = reader.read(fileInputStream);
+			prepareSchemaData(mac, model);
+			request.getSession().setAttribute("mac", mac);
+
+			fileInputStream.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return "settings-repository";
 	}
 	
 	

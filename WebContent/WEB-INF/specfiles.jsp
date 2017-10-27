@@ -74,10 +74,10 @@
 
 	<br>
 
-	<form action="settings" method="post">
+	<form action="settings/repository" method="post">
 		<select name="file">
 			<c:forEach items="${files}" var="item">
-				<option value="${item.getBundleId()}-${item.getVersion()}">${item.getResourceLocation()}</option>
+				<option value="${item.getResourceLocation()}">${item.getBundleId()}/${item.getVersion()}</option>
 			</c:forEach>
 		</select>
 		<input type="submit">
