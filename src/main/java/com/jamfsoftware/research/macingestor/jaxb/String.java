@@ -132,18 +132,18 @@ public class String implements MACDataType {
     public java.lang.String getValidation(){
     	java.lang.String attributes = "";
     	
-    	if(constraint.isNullable() != null && !constraint.isNullable()){
+    	if(constraint != null && constraint.isNullable() != null && !constraint.isNullable()){
     		attributes += "data-parsley-required=\"\" ";
     	}
     	
-    	if(constraint.getPattern() != null){
+    	if(constraint != null && constraint.getPattern() != null){
     		attributes += "pattern=\"" + constraint.getPattern()+"\" ";
     	} else {
-    		if(constraint.min != null){
+    		if(constraint != null && constraint.min != null){
     			attributes += "data-parsley-minLength=\"" + constraint.min + "\" ";
     		}
     		
-    		if(constraint.max != null){
+    		if(constraint != null && constraint.max != null){
     			attributes += "data-parsley-maxLength=\"" + constraint.max + "\" ";
     		}
     	}
@@ -170,12 +170,14 @@ public class String implements MACDataType {
 	public List<java.lang.String> getDefaultValueList() {
 		List<java.lang.String> defaults = new ArrayList<java.lang.String>();
 		try { 
-			if(defaultValue.getDeviceVariable() != null){
+			if(defaultValue != null && defaultValue.getDeviceVariable() != null){
 				defaults.add(defaultValue.getDeviceVariable().getJSSVariableName());
-			} else if (defaultValue.getUserVariable() != null){
+			} else if (defaultValue != null && defaultValue.getUserVariable() != null){
 				defaults.add(defaultValue.getUserVariable().getJSSVariableName());
+			} else if (defaultValue != null) {
+				defaults.add(defaultValue.getValue());
 			} else {
-				defaults.add(defaultValue.getValue());	
+				defaults.add("");
 			}
 		} catch (Exception e){
 			e.printStackTrace();
@@ -185,7 +187,7 @@ public class String implements MACDataType {
 
 	@Override
 	public boolean isUserOrDeviceVariable() {
-		return defaultValue.getDeviceVariable() != null || defaultValue.getUserVariable() != null;
+		return defaultValue != null && (defaultValue.getDeviceVariable() != null || defaultValue.getUserVariable() != null);
 	}
 
 	@Override

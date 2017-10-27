@@ -132,18 +132,18 @@ public class StringArray implements MACDataType {
 	public java.lang.String getValidation() {
 		java.lang.String attributes = "";
     	
-    	if(constraint.isNullable() != null && !constraint.isNullable()){
+    	if(constraint != null && constraint.isNullable() != null && !constraint.isNullable()){
     		attributes += "data-parsley-required=\"\" ";
     	}
     	
-    	if(constraint.getPattern() != null){
+    	if(constraint != null && constraint.getPattern() != null){
     		attributes += "pattern=\"" + constraint.getPattern()+"\" ";
     	} else {
-    		if(constraint.min != null){
+    		if(constraint != null && constraint.min != null){
     			attributes += "data-parsley-minLength=\"" + constraint.min + "\" ";
     		}
     		
-    		if(constraint.max != null){
+    		if(constraint != null && constraint.max != null){
     			attributes += "data-parsley-maxLength=\"" + constraint.max + "\" ";
     		}
     	}
@@ -152,17 +152,21 @@ public class StringArray implements MACDataType {
 
 	@Override
 	public List<java.lang.String> getDefaultValueList() {
-		
-		List<Object> vals = defaultValue.getValueOrUserVariableOrDeviceVariable();
 		List<java.lang.String> response = new ArrayList<java.lang.String>();
-		for(Object o : vals){
-			if(o instanceof DeviceVariable){
-				response.add(((DeviceVariable) o).getJSSVariableName());
-			} else if (o instanceof UserVariable){
-				response.add(((UserVariable) o).getJSSVariableName());
-			} else {
-				response.add(o.toString());
+
+		if (defaultValue != null) {
+			List<Object> vals = defaultValue.getValueOrUserVariableOrDeviceVariable();
+			for(Object o : vals) {
+				if(o instanceof DeviceVariable) {
+					response.add(((DeviceVariable) o).getJSSVariableName());
+				} else if(o instanceof UserVariable) {
+					response.add(((UserVariable) o).getJSSVariableName());
+				} else {
+					response.add(o.toString());
+				}
 			}
+		} else {
+			response.add("");
 		}
 		
 		return response;
@@ -171,16 +175,17 @@ public class StringArray implements MACDataType {
 	@Override
 	public boolean isUserOrDeviceVariable() {
 		try {
-			for(Object o : defaultValue.getValueOrUserVariableOrDeviceVariable()){
-				if(o.getClass().getSimpleName().equals("UserVariable") || o.getClass().getSimpleName().equals("DeviceVariable")){
-					return true;
+			if (defaultValue != null) {
+				for(Object o : defaultValue.getValueOrUserVariableOrDeviceVariable()) {
+					if(o.getClass().getSimpleName().equals("UserVariable") || o.getClass().getSimpleName().equals("DeviceVariable")) {
+						return true;
+					}
 				}
 			}
-			return false;
 		} catch(Exception e) {
 			e.printStackTrace();
-			return false;
 		}
+		return false;
 	}
 
 	@Override

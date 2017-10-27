@@ -132,15 +132,15 @@ public class Date implements MACDataType{
 	public java.lang.String getValidation() {
 		java.lang.String attributes = "";
 		
-		if(constraint.isNullable() != null && !constraint.isNullable()){
+		if(constraint != null && constraint.isNullable() != null && !constraint.isNullable()){
     		attributes += "data-parsley-required=\"\" ";
     	}
 		
-		if(constraint.getMin() != null){
+		if(constraint != null && constraint.getMin() != null){
 			attributes += "data-parsley-min=\"" + constraint.getMin() + "\" ";
 		}
 		
-		if(constraint.getMax() != null){
+		if(constraint != null && constraint.getMax() != null){
 			attributes += "data-parsley-max=\"" + constraint.getMax() + "\" ";
 		}
 		
@@ -151,6 +151,11 @@ public class Date implements MACDataType{
 	@Override
 	public List<java.lang.String> getDefaultValueList() {
 		List<java.lang.String> date = new ArrayList<java.lang.String>();
+		if (defaultValue != null) {
+			date.add(defaultValue.getValue().toString());
+		} else {
+			date.add("");
+		}
 		date.add(defaultValue.getValue().toString());
 		return date;
 	}
