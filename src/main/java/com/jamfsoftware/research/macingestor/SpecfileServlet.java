@@ -1,22 +1,25 @@
 package com.jamfsoftware.research.macingestor;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.ProtocolException;
 import java.net.URL;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.w3c.dom.Document;
+import org.xml.sax.SAXException;
+import org.xml.sax.XMLReader;
+import org.xml.sax.helpers.XMLReaderFactory;
 
 @Controller
 @RequestMapping("/specfiles")
@@ -37,32 +40,33 @@ public class SpecfileServlet {
 		country.put("SG", "Singapore");
 		country.put("MY", "Malaysia");
 
-		System.out.println(getRequest());
+		String specfileRepository = "https://d2e3kgnhdeg083.cloudfront.net";
+		Document specfileXML = getSpecfileXML(specfileRepository);
 
 		return country;
 	}
 
-	public String getRequest() {
+	public Document getSpecfileXML(String repository) {
 		try {
-			URL url = new URL("https://d2e3kgnhdeg083.cloudfront.net");
+			// get contents from repository
+			URL url = new URL(repository);
 			HttpURLConnection con = (HttpURLConnection) url.openConnection();
 			con.setRequestMethod("GET");
+			con.addRequestProperty("Accept", "application/xml");
 
-			BufferedReader in = new BufferedReader(new InputStreamReader(con.getInputStream()));
-			String inputLine;
-			StringBuffer content = new StringBuffer();
-			while ((inputLine = in.readLine()) != null) {
-				content.append(inputLine);
-			}
-			in.close();
+			DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
+			DocumentBuilder db = dbf.newDocumentBuilder();
+
+			Document xml = db.parse(con.getInputStream());
+			xml.getDocumentElement().normalize();
 
 			con.disconnect();
 
-			return String.valueOf(content);
-		} catch(IOException e) {
+			return xml;
+		} catch(IOException | ParserConfigurationException | SAXException e) {
 			e.printStackTrace();
 		}
 
-		return "";
+		return null;
 	}
 }
