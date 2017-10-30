@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -32,26 +33,18 @@ public class SpecfileServlet {
 	}
 
 	private List<Specfile> specfiles() {
-//		Map<String,String> specfiles = new LinkedHashMap<>();
-
-//		// TODO: replace sample data
-//		country.put("US", "United States");
-//		country.put("CHINA", "China");
-//		country.put("SG", "Singapore");
-//		country.put("MY", "Malaysia");
-
-		String specfileRepository = "https://d2e3kgnhdeg083.cloudfront.net";
-		Document specfileXML = getSpecfileXML(specfileRepository);
+		String specfileRepository = "https://d2e3kgnhdeg083.cloudfront.net"; // todo externalize variable
+		Document specfileXML = getSpecfileXML(specfileRepository); // todo handle this being null on failure to obtain repository contents
 		NodeList list = specfileXML.getDocumentElement().getElementsByTagName("Contents");
 
+		// iterate through the 'Contents' nodes
 		List<Specfile> specfiles = new ArrayList<>();
 		for(int i = 0; i < list.getLength(); i++) {
 			Node n = list.item(i);
 
-			// value of <Key> element: <Contents><Key>com.bundle.id</Key></Contents>
+			// example 'Contents' element: <Contents><Key>com.bundle.id/specfileVersion/appconfig.xml</Key></Contents>
 			String specfileName = n.getFirstChild().getFirstChild().getNodeValue();
-			String[] specfileNameSegments = specfileName.split("/");
-			//			System.out.println(Arrays.toString(specfileNameSegments));
+			String[] specfileNameSegments = specfileName.split("/"); // split bundle id and specfile version
 
 			String specfileResourceLocation = specfileRepository + "/" + specfileName;
 			String specfileBundleId = specfileNameSegments[0];
@@ -61,6 +54,7 @@ public class SpecfileServlet {
 			specfiles.add(specfile);
 		}
 
+		Collections.sort(specfiles, new SpecfileComparator());
 		return specfiles;
 	}
 
@@ -76,8 +70,6 @@ public class SpecfileServlet {
 			DocumentBuilder db = dbf.newDocumentBuilder();
 
 			Document xml = db.parse(con.getInputStream());
-//			xml.getDocumentElement().normalize();
-
 			con.disconnect();
 
 			return xml;

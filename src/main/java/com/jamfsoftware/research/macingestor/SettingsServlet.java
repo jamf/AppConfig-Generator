@@ -43,11 +43,11 @@ public class SettingsServlet {
 	}
 
 	@RequestMapping(value = "/repository", method = RequestMethod.POST)
-	public String prepareSettingsFromRepository(ModelMap model, HttpServletRequest request, @RequestParam("file") String fileLocation) {
+	public String prepareSettingsFromRepository(ModelMap model, HttpServletRequest request, @RequestParam("file") String specfileURL) {
 
 		JAXBReader<ManagedAppConfiguration> reader = new JAXBReader<ManagedAppConfiguration>(ManagedAppConfiguration.class);
 		try {
-			InputStream fileInputStream = new URL(fileLocation).openStream();
+			InputStream fileInputStream = new URL(specfileURL).openStream();
 
 			ManagedAppConfiguration mac = reader.read(fileInputStream);
 			prepareSchemaData(mac, model);
