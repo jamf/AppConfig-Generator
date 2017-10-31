@@ -17,6 +17,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
@@ -27,9 +28,27 @@ import org.xml.sax.SAXException;
 public class SpecfileServlet {
 
 	@RequestMapping(method = RequestMethod.GET)
-	public String index(HttpServletRequest request, HttpServletResponse response, ModelMap model) {
-		model.addAttribute("files", specfiles());
+	public String index(HttpServletRequest request, HttpServletResponse response, ModelMap model, @RequestParam(value = "bundleId", required = false) String bundleId) {
+		if (bundleId != null) {
+			model.addAttribute("files", specfiles(bundleId));
+		} else {
+			model.addAttribute("files", specfiles());
+		}
 		return "specfiles";
+	}
+
+	private List<Specfile> specfiles(String bundleId) {
+		List<Specfile> allSpecfiles = specfiles();
+		List<Specfile> specificSpecfiles = new ArrayList<>();
+
+		// only return specfiles corresponding to that bundle id
+		for(Specfile s : allSpecfiles) {
+			if (s.getBundleId().equals(bundleId)) {
+				specificSpecfiles.add(s);
+			}
+		}
+
+		return specificSpecfiles;
 	}
 
 	private List<Specfile> specfiles() {
