@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
-@RequestMapping("/specfiles")
+@RequestMapping("/")
 public class SpecfileServlet {
 
 	@RequestMapping(method = RequestMethod.GET)
@@ -21,7 +21,7 @@ public class SpecfileServlet {
 		} else {
 			model.addAttribute("files", repository.getSpecfiles());
 		}
-		return "specfiles";
+		return "index";
 	}
 
 }

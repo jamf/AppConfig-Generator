@@ -45,11 +45,9 @@ public class SubmitServlet {
 		}
 
 		return null;
-
 	}
-
 	
-	public String generatePlist(HttpServletRequest request){
+	private String generatePlist(HttpServletRequest request){
 		ManagedAppConfiguration mac = (ManagedAppConfiguration)request.getSession().getAttribute("mac");
 		NSDictionary plist = new NSDictionary();
 		for(Object o : mac.getDict().getStringOrStringArrayOrInteger()){
@@ -59,9 +57,9 @@ public class SubmitServlet {
 		return plist.toXMLPropertyList();
 	}
 
+	
 	@RequestMapping(value = "xml", method = RequestMethod.POST, produces = MediaType.APPLICATION_XML_VALUE)
-	public @ResponseBody
-	String dictXML(HttpServletRequest request, HttpServletResponse response) {
+	public @ResponseBody String dictXML(HttpServletRequest request, HttpServletResponse response) {
 		String plist = generatePlist(request); // obtain plist from request
 
 		try {
@@ -81,7 +79,7 @@ public class SubmitServlet {
 			e.printStackTrace();
 		}
 
-		return null;
+		return null; // todo probably throws a 500 error page
 	}
 
 }

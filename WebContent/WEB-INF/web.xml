@@ -21,15 +21,15 @@
 
 	<servlet-mapping>
 		<servlet-name>springmvc-dispatcher</servlet-name>
-		<url-pattern>/specfiles</url-pattern>
-	</servlet-mapping>
-	<servlet-mapping>
-		<servlet-name>springmvc-dispatcher</servlet-name>
 		<url-pattern>/settings/repository</url-pattern>
 	</servlet-mapping>
 	<servlet-mapping>
 		<servlet-name>springmvc-dispatcher</servlet-name>
 		<url-pattern>/submit/xml</url-pattern>
 	</servlet-mapping>
-	
+
+	<servlet-mapping>
+		<servlet-name>springmvc-dispatcher</servlet-name>
+		<url-pattern>/</url-pattern>
+	</servlet-mapping>
 </web-app>
