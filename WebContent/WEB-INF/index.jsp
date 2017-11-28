@@ -9,6 +9,7 @@
 <%@ include file="../bootstrap/css/bootstrap.min.css" %>
 <%@ include file="../parsley/parsley.css" %>
 <%@ include file="../fileinput/css/fileinput.min.css" %>
+<%@ include file="../select2/css/select2.min.css" %>
 
 html {
   position: relative;
@@ -49,7 +50,13 @@ body {
 <script src="../parsley/parsley.min.js"></script>
 <script src="../bootstrap/js/bootstrap.file-input.js"></script>
 <script src="../fileinput/js/fileinput.min.js"></script>
+<script src="../select2/js/select2.full.min.js"></script>
 <script>
+    $(document).ready(function() {
+        $('.select-specfile').select2({
+            placeholder: "Select a specfile"
+		});
+    });
 </script>
 </head>
 <body>
@@ -76,16 +83,15 @@ body {
 			</form>
 
 			<li class="lead">Or select a specfile from the repository</li>
-			<div class="row">
 				<form action="settings/repository" method="post">
-					<select name="file" class="form-control col col-lg" style="width: auto;"> <!--// todo: select2-->
+					<select name="file" class="select-specfile form-control" style="width: auto;">
+						<option></option>
 						<c:forEach items="${files}" var="item">
 							<option value="${item.resourceLocation}">${item.bundleId}/${item.version}</option>
 						</c:forEach>
 					</select>
-					<input type="submit" value="Select" class="btn btn-default col col-sm">
+					<input type="submit" value="Select" class="btn btn-default">
 				</form>
-			</div>
 
 		</ol>
 	</div>

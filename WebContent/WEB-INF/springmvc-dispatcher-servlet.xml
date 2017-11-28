@@ -24,5 +24,6 @@
 	<mvc:resources mapping="/fonts/**" location="/bootstrap/fonts/"/>
 	<mvc:resources mapping="/fileinput/**" location="/fileinput/"/>
 	<mvc:resources mapping="/parsley/**" location="/parsley/"/>
+	<mvc:resources mapping="/select2/**" location="/select2/"/>
 
 </beans>  
