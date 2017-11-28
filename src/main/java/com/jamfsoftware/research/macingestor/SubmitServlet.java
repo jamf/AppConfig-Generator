@@ -3,28 +3,15 @@ package com.jamfsoftware.research.macingestor;
 import java.io.IOException;
 import java.io.Reader;
 import java.io.StringReader;
-import java.io.StringWriter;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.parsers.ParserConfigurationException;
-import javax.xml.transform.Transformer;
-import javax.xml.transform.TransformerException;
-import javax.xml.transform.TransformerFactory;
-import javax.xml.transform.dom.DOMSource;
-import javax.xml.transform.stream.StreamResult;
 
 import org.apache.commons.io.IOUtils;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.w3c.dom.Document;
-import org.w3c.dom.Node;
-import org.xml.sax.SAXException;
 
 import com.dd.plist.NSDictionary;
 import com.jamfsoftware.research.macingestor.jaxb.ManagedAppConfiguration;
@@ -58,28 +45,28 @@ public class SubmitServlet {
 	}
 
 	
-	@RequestMapping(value = "xml", method = RequestMethod.POST, produces = MediaType.APPLICATION_XML_VALUE)
-	public @ResponseBody String dictXML(HttpServletRequest request, HttpServletResponse response) {
-		String plist = generatePlist(request); // obtain plist from request
-
-		try {
-			// find 'dict' xml tag
-			DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
-			DocumentBuilder db = dbf.newDocumentBuilder();
-			Document xml = db.parse(IOUtils.toInputStream(plist));
-			Node dict = xml.getDocumentElement().getElementsByTagName("dict").item(0);
-
-			// convert xml doc to string
-			StringWriter writer = new StringWriter();
-			Transformer transformer = TransformerFactory.newInstance().newTransformer();
-			transformer.transform(new DOMSource(dict), new StreamResult(writer));
-
-			return writer.toString(); // return xml string
-		} catch(ParserConfigurationException | IOException | SAXException | TransformerException e) {
-			e.printStackTrace();
-		}
-
-		return null; // todo probably throws a 500 error page
-	}
+//	@RequestMapping(value = "xml", method = RequestMethod.POST, produces = MediaType.APPLICATION_XML_VALUE)
+//	public @ResponseBody String dictXML(HttpServletRequest request, HttpServletResponse response) {
+//		String plist = generatePlist(request); // obtain plist from request
+//
+//		try {
+//			// find 'dict' xml tag
+//			DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
+//			DocumentBuilder db = dbf.newDocumentBuilder();
+//			Document xml = db.parse(IOUtils.toInputStream(plist));
+//			Node dict = xml.getDocumentElement().getElementsByTagName("dict").item(0);
+//
+//			// convert xml doc to string
+//			StringWriter writer = new StringWriter();
+//			Transformer transformer = TransformerFactory.newInstance().newTransformer();
+//			transformer.transform(new DOMSource(dict), new StreamResult(writer));
+//
+//			return writer.toString(); // return xml string
+//		} catch(ParserConfigurationException | IOException | SAXException | TransformerException e) {
+//			e.printStackTrace();
+//		}
+//
+//		return null; // todo probably throws a 500 error page
+//	}
 
 }
