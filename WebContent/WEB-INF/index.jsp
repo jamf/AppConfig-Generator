@@ -3,6 +3,7 @@
 <%@ page import="com.jamfsoftware.research.macingestor.jaxb.Field" %>
 <html>
 <head>
+<title>AppConfig Generator</title>
 <%--<link href="../bootstrap/css/bootstrap.css" rel="stylesheet" media="screen">--%>
 <style type="text/css">
 <%@ include file="../bootstrap/css/bootstrap-theme.css" %>
@@ -63,13 +64,13 @@ body {
 	<nav class="navbar navbar-default">
 	  <div class="container-fluid">
 	    <div class="navbar-header">
-	      <a class="navbar-brand" href="/">MAC Ingestor</a>
+	      <a class="navbar-brand" href="/">MAC Generator</a>
 	    </div>
 	  </div>
 	</nav>
 	<div class="container">
-	<div><h1 class="text-center">Managed Application Configuration Ingestor</h1> <br>
-		<p class="lead">The Managed App Configuration Ingestor is a tool which assists in the generation of configuration plist for a mobile app on a device enrolled in an MDM solution. Follow the steps below to get started:</p>
+	<div><h1 class="text-center">AppConfig Generator</h1> <br>
+		<p class="lead">The AppConfig Generator is a tool which assists in the generation of configuration plist for a mobile app on a device enrolled in an MDM solution. Follow the steps below to get started:</p>
 		<ol>
 			<li class="lead">Obtain a Managed App Configuration schema file from the application developer<br>and upload the schema file in the form below</li>
 
@@ -98,8 +99,7 @@ body {
 	
 	<footer class="footer">
       <div class="container">
-		  <%-- todo: update this--%>
-        <p class="text-muted text-center center-text-trick">Copyright &copy; 2016 JAMF Software, LLC</p>
+        <p class="text-muted text-center center-text-trick">Copyright &copy; 2017 JAMF Software, LLC</p>
       </div>
     </footer>	
 </body>

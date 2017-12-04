@@ -2,6 +2,7 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <html>
 <head>
+	<title>AppConfig Generator</title>
 	<link href="bootstrap/css/bootstrap.css" rel="stylesheet" media="screen">
 	<style type="text/css">
 		<%@include file="../bootstrap/css/bootstrap-theme.css" %>
@@ -61,7 +62,7 @@
 </nav>
 
 <div class="container">
-	<h1 class="text-center">Managed Application Configuration Ingestor</h1> <br>
+	<h1 class="text-center">AppConfig Generator</h1> <br>
 
 	<form action="settings/repository" method="post">
 		<select name="file" class="form-control">

@@ -3,6 +3,7 @@
 <%@ page import="com.jamfsoftware.research.macingestor.jaxb.Field" %>
 <html>
 <head>
+<title>AppConfig Generator</title>
 <link href="bootstrap/css/bootstrap.css" rel="stylesheet" media="screen">
 <style type="text/css">
 <%@include file="../bootstrap/css/bootstrap-theme.css" %> 
@@ -61,9 +62,9 @@ body {
 	</nav>
 	
 	<div class="container">
-	<h1 class="text-center">Managed Application Configuration Ingestor</h1>
+	<h1 class="text-center">AppConfig Generator</h1>
 		<br>
-		<p class="lead">The Managed App Configuration Ingestor is a tool which assists in the generation of configuration plist for a mobile app on a device enrolled in an MDM solution. Follow the steps below to get started:</p>
+		<p class="lead">The AppConfig Generator is a tool which assists in the generation of configuration plist for a mobile app on a device enrolled in an MDM solution. Follow the steps below to get started:</p>
 		<ol>
 			<li class="lead">Fill out the presented configuration options</li>
 			<li class="lead">Download the plist configuration file</li>
@@ -93,7 +94,7 @@ body {
 	
 	<footer class="footer">
       <div class="container">
-        <p class="text-muted text-center center-text-trick">Copyright &copy; 2016 JAMF Software, LLC</p>
+        <p class="text-muted text-center center-text-trick">Copyright &copy; 2017 JAMF Software, LLC</p>
       </div>
     </footer>	
 </body>
