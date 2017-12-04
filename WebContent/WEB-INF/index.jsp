@@ -71,8 +71,7 @@ body {
 	<div><h1 class="text-center">Managed Application Configuration Ingestor</h1> <br>
 		<p class="lead">The Managed App Configuration Ingestor is a tool which assists in the generation of configuration plist for a mobile app on a device enrolled in an MDM solution. Follow the steps below to get started:</p>
 		<ol>
-			<li class="lead">Obtain a Managed App Configuration schema file from the application developer</li>
-			<li class="lead">Upload the schema file in the form below</li>
+			<li class="lead">Obtain a Managed App Configuration schema file from the application developer<br>and upload the schema file in the form below</li>
 
 			<form role="form" enctype="multipart/form-data" action="settings" method="post" class="center-block" role="form">
 				<input id="input-1" type="file" class="file" name="file" data-show-preview="false" data-show-remove="false" data-upload-Label="Configure">

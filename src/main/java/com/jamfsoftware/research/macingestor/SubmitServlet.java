@@ -44,29 +44,4 @@ public class SubmitServlet {
 		return plist.toXMLPropertyList();
 	}
 
-	
-//	@RequestMapping(value = "xml", method = RequestMethod.POST, produces = MediaType.APPLICATION_XML_VALUE)
-//	public @ResponseBody String dictXML(HttpServletRequest request, HttpServletResponse response) {
-//		String plist = generatePlist(request); // obtain plist from request
-//
-//		try {
-//			// find 'dict' xml tag
-//			DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
-//			DocumentBuilder db = dbf.newDocumentBuilder();
-//			Document xml = db.parse(IOUtils.toInputStream(plist));
-//			Node dict = xml.getDocumentElement().getElementsByTagName("dict").item(0);
-//
-//			// convert xml doc to string
-//			StringWriter writer = new StringWriter();
-//			Transformer transformer = TransformerFactory.newInstance().newTransformer();
-//			transformer.transform(new DOMSource(dict), new StreamResult(writer));
-//
-//			return writer.toString(); // return xml string
-//		} catch(ParserConfigurationException | IOException | SAXException | TransformerException e) {
-//			e.printStackTrace();
-//		}
-//
-//		return null; // todo probably throws a 500 error page
-//	}
-
 }

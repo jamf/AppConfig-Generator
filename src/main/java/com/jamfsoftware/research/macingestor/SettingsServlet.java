@@ -45,7 +45,7 @@ public class SettingsServlet {
 	@RequestMapping(value = "/repository", method = RequestMethod.POST)
 	public String prepareSettingsFromRepository(ModelMap model, HttpServletRequest request, @RequestParam("file") String specfileURL) {
 
-		JAXBReader<ManagedAppConfiguration> reader = new JAXBReader<ManagedAppConfiguration>(ManagedAppConfiguration.class);
+		JAXBReader<ManagedAppConfiguration> reader = new JAXBReader<>(ManagedAppConfiguration.class);
 		try {
 			InputStream fileInputStream = new URL(specfileURL).openStream();
 
