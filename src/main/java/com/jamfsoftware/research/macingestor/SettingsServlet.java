@@ -8,7 +8,11 @@ import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -26,11 +30,14 @@ import com.jamfsoftware.research.macingestor.jaxb.Presentation;
 @Controller
 @RequestMapping("/settings")
 public class SettingsServlet {
+
+	@Value("${repository.url}")
+	private String repositoryURL;
 	
 	@RequestMapping(method = RequestMethod.POST)
-	public String prepareSettings(ModelMap model, HttpServletRequest request, @RequestParam("file") MultipartFile file) {
+	public String prepareSettings(ModelMap model, HttpServletRequest request, HttpServletResponse response, @RequestParam("file") MultipartFile file) {
 		
-		JAXBReader<ManagedAppConfiguration> reader = new JAXBReader<ManagedAppConfiguration>(ManagedAppConfiguration.class);
+		JAXBReader<ManagedAppConfiguration> reader = new JAXBReader<>(ManagedAppConfiguration.class);
 		try {
 			ManagedAppConfiguration mac = reader.read(file.getInputStream());
 			prepareSchemaData(mac, model);
@@ -38,25 +45,32 @@ public class SettingsServlet {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		
+
 		return "settings";
 	}
 
 	@RequestMapping(value = "/repository", method = RequestMethod.POST)
-	public String prepareSettingsFromRepository(ModelMap model, HttpServletRequest request, @RequestParam("file") String specfileURL) {
+	public String prepareSettingsFromRepository(ModelMap model, HttpServletRequest request, HttpServletResponse response, @RequestParam("file") String specfileURL) throws InvalidSpecfileException {
 
-		JAXBReader<ManagedAppConfiguration> reader = new JAXBReader<>(ManagedAppConfiguration.class);
-		try {
-			InputStream fileInputStream = new URL(specfileURL).openStream();
+		SpecfileRepository repository = new SpecfileRepository(repositoryURL);
+		if (repository.validSpecfile(specfileURL)) {
 
-			ManagedAppConfiguration mac = reader.read(fileInputStream);
-			prepareSchemaData(mac, model);
-			request.getSession().setAttribute("mac", mac);
+			JAXBReader<ManagedAppConfiguration> reader = new JAXBReader<>(ManagedAppConfiguration.class);
+			try {
+				InputStream fileInputStream = new URL(specfileURL).openStream();
 
-			fileInputStream.close();
-		} catch (IOException e) {
-			e.printStackTrace();
+				ManagedAppConfiguration mac = reader.read(fileInputStream);
+				prepareSchemaData(mac, model);
+				request.getSession().setAttribute("mac", mac);
+
+				fileInputStream.close();
+			} catch(IOException e) {
+				e.printStackTrace();
+			}
+		} else {
+			throw new InvalidSpecfileException();
 		}
+
 		return "settings-repository";
 	}
 	

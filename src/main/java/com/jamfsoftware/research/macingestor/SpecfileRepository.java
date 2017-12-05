@@ -82,4 +82,14 @@ public class SpecfileRepository {
 		return null;
 	}
 
+	public boolean validSpecfile(String file) {
+		boolean valid = false;
+		for(Specfile s : getSpecfiles()) {
+			if (s.getResourceLocation().equals(file)) {
+				valid = true;
+			}
+		}
+		return valid;
+	}
+
 }
