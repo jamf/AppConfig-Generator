@@ -1,4 +1,5 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ page import="com.jamfsoftware.research.macingestor.MACDataType" %>
 <%@ page import="com.jamfsoftware.research.macingestor.jaxb.Field" %>
 <html>
@@ -83,7 +84,7 @@ body {
 				<select name="file" class="select-specfile form-control" style="width: auto;">
 					<option></option>
 					<c:forEach items="${files}" var="item">
-						<option value="${item.resourceLocation}">${item.bundleId}/${item.version}</option>
+						<option value="${fn:escapeXml(item.resourceLocation)}">${fn:escapeXml(item.bundleId)}/${fn:escapeXml(item.version)}</option>
 					</c:forEach>
 				</select>
 				<input type="submit" value="Select" class="btn btn-default">
