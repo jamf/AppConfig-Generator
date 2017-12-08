@@ -65,7 +65,7 @@ body {
 	<nav class="navbar navbar-default">
 	  <div class="container-fluid">
 	    <div class="navbar-header">
-	      <a class="navbar-brand" href="/">MAC Generator</a>
+	      <a class="navbar-brand" href="/">AppConfig Generator</a>
 	    </div>
 	  </div>
 	</nav>

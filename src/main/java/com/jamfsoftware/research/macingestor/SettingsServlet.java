@@ -11,8 +11,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -50,7 +48,7 @@ public class SettingsServlet {
 	}
 
 	@RequestMapping(value = "/repository", method = RequestMethod.POST)
-	public String prepareSettingsFromRepository(ModelMap model, HttpServletRequest request, HttpServletResponse response, @RequestParam("file") String specfileURL) throws InvalidSpecfileException {
+	public String prepareSettingsFromRepository(ModelMap model, HttpServletRequest request, HttpServletResponse response, @RequestParam("file") String specfileURL) {
 
 		SpecfileRepository repository = new SpecfileRepository(repositoryURL);
 		if (repository.validSpecfile(specfileURL)) {
@@ -67,8 +65,6 @@ public class SettingsServlet {
 			} catch(IOException e) {
 				e.printStackTrace();
 			}
-		} else {
-			throw new InvalidSpecfileException();
 		}
 
 		return "settings-repository";
@@ -134,5 +130,4 @@ public class SettingsServlet {
 		}
 		return null;
 	}
-
 }
