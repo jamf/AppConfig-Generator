@@ -71,7 +71,9 @@ body {
 	</nav>
 	<div class="container">
 	<div><h1 class="text-center">AppConfig Generator</h1> <br>
-		<p class="lead">The AppConfig Generator is a tool which assists in the generation of configuration plist for a mobile app on a device enrolled in an MDM solution. Follow the steps below to get started:</p>
+		<p class="lead">The AppConfig Generator is a tool which assists in the generation of configuration plist for a mobile app on a device enrolled in an MDM solution.</p>
+		<p class="lead">For more information on AppConfig visit: <a href="https://appconfig.org/" target="_blank">appconfig.org</a> or view the <a href="https://storage.googleapis.com/appconfig-media/appconfig-content/uploads/2017/01/ManagedAppConfig.pdf" target="_blank">AppConfig Spec Reference</a></p>
+		<p class="lead">Follow the steps below to get started:</p>
 		<ol>
 			<li class="lead">Obtain a Managed App Configuration schema file from the application developer<br>and upload the schema file in the form below</li>
 

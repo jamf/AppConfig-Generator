@@ -146,7 +146,7 @@ public class SettingsServlet {
 	public ModelAndView badSpecfile() {
 		ModelAndView errorPage = new ModelAndView("errorPage");
 
-		String errorMsg = "Invalid Specfile Format.";
+		String errorMsg = "Invalid Specfile Format";
 
 		errorPage.addObject("errorMsg", errorMsg);
 		return errorPage;
