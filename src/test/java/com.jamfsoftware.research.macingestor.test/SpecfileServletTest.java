@@ -1,6 +1,11 @@
 package com.jamfsoftware.research.macingestor.test;
 
 import org.junit.Test;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.PropertySource;
+import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
 import org.w3c.dom.Document;
 import org.w3c.dom.NodeList;
 
@@ -10,23 +15,26 @@ import com.jamfsoftware.research.macingestor.SpecfileServlet;
 
 public class SpecfileServletTest {
 
-//	@Test
-//	public void testNonexistentRepository() {
-//		try {
-//			String specfileRepository = "https://nothing.example.com";
-//			Document xml = new SpecfileServlet().getSpecfileXML(specfileRepository);
-//			String rootElement = xml.getDocumentElement().getNodeName();
-//		} catch(Exception e) {
-//			assert true;
-//		}
-//		assert false;
-//	}
+	private String testRepositoryURL = "https://d2e3kgnhdeg083.cloudfront.net";
+
+	@Test
+	public void testNonexistentRepository() {
+		boolean failed = false;
+		try {
+			String specfileRepositoryURL = "https://repository.example.com";
+			SpecfileRepository repository = new SpecfileRepository(specfileRepositoryURL);
+			Document xml = repository.getSpecfileXML();
+			String rootElement = xml.getDocumentElement().getNodeName();
+		} catch(Exception e) {
+			failed = true;
+		}
+		assert failed; // it's supposed to fail
+	}
 
 	@Test
 	public void testGetSpecfiles() {
-		String specfileRepositoryURL = "https://d2e3kgnhdeg083.cloudfront.net";
-		SpecfileRepository repository = new SpecfileRepository(specfileRepositoryURL);
-		Document xml = repository.getSpecfileXML(specfileRepositoryURL);
+		SpecfileRepository repository = new SpecfileRepository(testRepositoryURL);
+		Document xml = repository.getSpecfileXML();
 
 		String rootElement = xml.getDocumentElement().getNodeName();
 		System.out.println(rootElement);
@@ -37,16 +45,11 @@ public class SpecfileServletTest {
 
 	@Test
 	public void testSpecfilesExist() {
-		String specfileRepositoryURL = "https://d2e3kgnhdeg083.cloudfront.net";
-		SpecfileRepository repository = new SpecfileRepository(specfileRepositoryURL);
-		Document specfileXML = repository.getSpecfileXML(specfileRepositoryURL);
+		SpecfileRepository repository = new SpecfileRepository(testRepositoryURL);
+		Document specfileXML = repository.getSpecfileXML();
 		NodeList list = specfileXML.getDocumentElement().getElementsByTagName("Contents");
 
 		assert list.getLength() > 0;
 	}
 
-	@Test
-	public void testGetXML() {
-
-	}
 }
