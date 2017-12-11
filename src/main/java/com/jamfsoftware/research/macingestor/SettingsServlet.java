@@ -9,14 +9,20 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.xml.bind.JAXBException;
 
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.ModelAndView;
+import org.xml.sax.SAXException;
 
 import com.jamfsoftware.research.macingestor.jaxb.Field;
 import com.jamfsoftware.research.macingestor.jaxb.FieldGroup;
@@ -129,5 +135,20 @@ public class SettingsServlet {
 			}
 		}
 		return null;
+	}
+
+	@ResponseStatus(value = HttpStatus.UNSUPPORTED_MEDIA_TYPE)
+	@ExceptionHandler({ // 3 main exceptions thrown when file uploaded isn't in a valid format
+			JAXBException.class, // xml isn't formatted correctly
+			SAXException.class,
+			NullPointerException.class // file is not xml
+	})
+	public ModelAndView badSpecfile() {
+		ModelAndView errorPage = new ModelAndView("errorPage");
+
+		String errorMsg = "Invalid Specfile Format.";
+
+		errorPage.addObject("errorMsg", errorMsg);
+		return errorPage;
 	}
 }
