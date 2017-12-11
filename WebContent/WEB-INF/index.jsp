@@ -76,7 +76,7 @@ body {
 			<li class="lead">Obtain a Managed App Configuration schema file from the application developer<br>and upload the schema file in the form below</li>
 
 			<form role="form" enctype="multipart/form-data" action="settings" method="post" class="center-block" role="form">
-				<input id="input-1" type="file" class="file" name="file" data-show-preview="false" data-show-remove="false" data-upload-Label="Configure">
+				<input id="input-1" type="file" accept=".xml,application/xml,text/xml" class="file" name="file" data-show-preview="false" data-show-remove="false" data-upload-Label="Configure">
 			</form>
 
 			<p class="lead">or select a specfile from the repository</p>
