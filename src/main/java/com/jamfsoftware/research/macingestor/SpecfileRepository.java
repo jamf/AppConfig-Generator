@@ -36,34 +36,35 @@ public class SpecfileRepository {
 	}
 
 	public List<Specfile> getSpecfiles() {
-		Document specfileXML = getSpecfileXML(repositoryURL); // todo handle this being null on failure to obtain repository contents
-		NodeList list = specfileXML.getDocumentElement().getElementsByTagName("Contents");
-
-		// iterate through the 'Contents' nodes
 		List<Specfile> specfiles = new ArrayList<>();
-		for(int i = 0; i < list.getLength(); i++) {
-			Node n = list.item(i);
 
-			// example 'Contents' element: <Contents><Key>com.bundle.id/specfileVersion/appconfig.xml</Key></Contents>
-			String specfileName = n.getFirstChild().getFirstChild().getNodeValue();
-			String[] specfileNameSegments = specfileName.split("/"); // split bundle id and specfile version
+		Document specfileXML = getSpecfileXML();
+		if (specfileXML != null) {
+			NodeList list = specfileXML.getDocumentElement().getElementsByTagName("Contents");
+			// iterate through the 'Contents' nodes
+			for(int i = 0; i < list.getLength(); i++) {
+				Node n = list.item(i);
 
-			String specfileResourceLocation = repositoryURL + "/" + specfileName;
-			String specfileBundleId = specfileNameSegments[0];
-			String specfileVersion = specfileNameSegments[1];
+				// example 'Contents' element: <Contents><Key>com.bundle.id/specfileVersion/appconfig.xml</Key></Contents>
+				String specfileName = n.getFirstChild().getFirstChild().getNodeValue();
+				String[] specfileNameSegments = specfileName.split("/"); // split bundle id and specfile version
 
-			Specfile specfile = new Specfile(specfileBundleId, specfileVersion, specfileResourceLocation);
-			specfiles.add(specfile);
+				String specfileResourceLocation = repositoryURL + "/" + specfileName;
+				String specfileBundleId = specfileNameSegments[0];
+				String specfileVersion = specfileNameSegments[1];
+
+				Specfile specfile = new Specfile(specfileBundleId, specfileVersion, specfileResourceLocation);
+				specfiles.add(specfile);
+			}
+			Collections.sort(specfiles, new SpecfileComparator()); // sort using our custom SpecfileComparator
 		}
-
-		Collections.sort(specfiles, new SpecfileComparator());
-		return specfiles;
+		return specfiles; // returns empty list if repository does not contain any specfiles
 	}
 
-	public Document getSpecfileXML(String repository) {
+	public Document getSpecfileXML() {
 		try {
 			// get contents from repository
-			URL url = new URL(repository);
+			URL url = new URL(repositoryURL);
 			HttpURLConnection con = (HttpURLConnection) url.openConnection();
 			con.setRequestMethod("GET");
 			con.addRequestProperty("Accept", "application/xml");
