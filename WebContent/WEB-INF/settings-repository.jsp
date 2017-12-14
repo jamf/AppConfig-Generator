@@ -6,41 +6,10 @@
 <title>AppConfig Generator</title>
 <link href="../bootstrap/css/bootstrap.css" rel="stylesheet" media="screen">
 <style type="text/css">
-<%@include file="../bootstrap/css/bootstrap-theme.css" %>
-<%@include file="../bootstrap/css/bootstrap-tokenfield.min.css" %>
-<%@include file="../parsley/parsley.css" %>
-
-html {
-  position: relative;
-  min-height: 100%;
-}
-body {
-  /* Margin bottom by footer height */
-  margin-bottom: 60px;
-}
-.footer {
-  position: absolute;
-  bottom: 0;
-  width: 100%;
-  /* Set the fixed height of the footer here */
-  height: 60px;
-  background-color: #f5f5f5;
-  
-}
-
-.vertical-center {
-  min-height: 100%;  /* Fallback for browsers do NOT support vh unit */
-  min-height: 100vh; /* These two lines are counted as one :-)       */
-
-  display: flex;
-  align-items: center;
-}
-
-.center-text-trick {
-  height: 50px;
-  line-height: 60px;
-  white-space: nowrap;
-} 
+<%@ include file="../bootstrap/css/bootstrap-theme.css" %>
+<%@ include file="../bootstrap/css/bootstrap-tokenfield.min.css" %>
+<%@ include file="../parsley/parsley.css" %>
+<%@ include file="style.css"%>
 </style>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <script src="../bootstrap/js/jquery.min.js"></script>
@@ -48,9 +17,6 @@ body {
 <script src="../bootstrap/js/bootstrap.js"></script>
 <script src="../bootstrap/js/bootstrap-tokenfield.min.js"></script>
 <script src="../parsley/parsley.min.js"></script>
-<script>
-
-</script>
 </head>
 <body>
 	<nav class="navbar navbar-default">
