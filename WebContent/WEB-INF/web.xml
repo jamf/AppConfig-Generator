@@ -16,7 +16,25 @@
 	</servlet-mapping>
 	<servlet-mapping>
 		<servlet-name>springmvc-dispatcher</servlet-name>
+		<url-pattern>/settings/repository</url-pattern>
+	</servlet-mapping>
+
+	<servlet-mapping>
+		<servlet-name>springmvc-dispatcher</servlet-name>
 		<url-pattern>/submit</url-pattern>
 	</servlet-mapping>
-	
+
+	<servlet-mapping>
+		<servlet-name>springmvc-dispatcher</servlet-name>
+		<url-pattern>/</url-pattern>
+	</servlet-mapping>
+
+	<error-page>
+		<location>/errors</location>
+	</error-page>
+
+	<context-param>
+		<param-name>defaultHtmlEscape</param-name>
+		<param-value>true</param-value>
+	</context-param>
 </web-app>

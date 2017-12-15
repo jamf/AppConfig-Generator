@@ -3,7 +3,6 @@ package com.jamfsoftware.research.macingestor;
 import java.io.IOException;
 import java.io.Reader;
 import java.io.StringReader;
-import java.util.Arrays;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -33,11 +32,9 @@ public class SubmitServlet {
 		}
 
 		return null;
-
 	}
 	
-	
-	public String generatePlist(HttpServletRequest request){
+	private String generatePlist(HttpServletRequest request){
 		ManagedAppConfiguration mac = (ManagedAppConfiguration)request.getSession().getAttribute("mac");
 		NSDictionary plist = new NSDictionary();
 		for(Object o : mac.getDict().getStringOrStringArrayOrInteger()){

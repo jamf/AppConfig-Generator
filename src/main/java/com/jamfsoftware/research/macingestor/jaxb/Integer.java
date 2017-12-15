@@ -150,7 +150,11 @@ public class Integer implements MACDataType {
 	@Override
 	public List<java.lang.String> getDefaultValueList() {
 		List<java.lang.String> values = new ArrayList<java.lang.String>();
-		values.add(defaultValue.getValue().toString());
+		if (defaultValue != null) {
+			values.add(defaultValue.getValue().toString());
+		} else {
+			values.add("");
+		}
 		return values;
 	}
 

@@ -1,18 +1,28 @@
 package com.jamfsoftware.research.macingestor;
 
 import java.io.IOException;
+import java.io.InputStream;
+import java.net.URL;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.xml.bind.JAXBException;
 
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.ModelAndView;
+import org.xml.sax.SAXException;
 
 import com.jamfsoftware.research.macingestor.jaxb.Field;
 import com.jamfsoftware.research.macingestor.jaxb.FieldGroup;
@@ -24,11 +34,14 @@ import com.jamfsoftware.research.macingestor.jaxb.Presentation;
 @Controller
 @RequestMapping("/settings")
 public class SettingsServlet {
+
+	@Value("${repository.url}")
+	private String repositoryURL;
 	
 	@RequestMapping(method = RequestMethod.POST)
-	public String prepareSettings(ModelMap model, HttpServletRequest request, @RequestParam("file") MultipartFile file) {
+	public String prepareSettings(ModelMap model, HttpServletRequest request, HttpServletResponse response, @RequestParam("file") MultipartFile file) {
 		
-		JAXBReader<ManagedAppConfiguration> reader = new JAXBReader<ManagedAppConfiguration>(ManagedAppConfiguration.class);
+		JAXBReader<ManagedAppConfiguration> reader = new JAXBReader<>(ManagedAppConfiguration.class);
 		try {
 			ManagedAppConfiguration mac = reader.read(file.getInputStream());
 			prepareSchemaData(mac, model);
@@ -36,8 +49,31 @@ public class SettingsServlet {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		
+
 		return "settings";
+	}
+
+	@RequestMapping(value = "/repository", method = RequestMethod.POST)
+	public String prepareSettingsFromRepository(ModelMap model, HttpServletRequest request, HttpServletResponse response, @RequestParam("file") String specfileURL) {
+
+		SpecfileRepository repository = new SpecfileRepository(repositoryURL);
+		if (repository.validSpecfile(specfileURL)) {
+
+			JAXBReader<ManagedAppConfiguration> reader = new JAXBReader<>(ManagedAppConfiguration.class);
+			try {
+				InputStream fileInputStream = new URL(specfileURL).openStream();
+
+				ManagedAppConfiguration mac = reader.read(fileInputStream);
+				prepareSchemaData(mac, model);
+				request.getSession().setAttribute("mac", mac);
+
+				fileInputStream.close();
+			} catch(IOException e) {
+				e.printStackTrace();
+			}
+		}
+
+		return "settings-repository";
 	}
 	
 	
@@ -101,4 +137,18 @@ public class SettingsServlet {
 		return null;
 	}
 
+	@ResponseStatus(value = HttpStatus.UNSUPPORTED_MEDIA_TYPE)
+	@ExceptionHandler({ // 3 main exceptions thrown when file uploaded isn't in a valid format
+			JAXBException.class, // xml isn't formatted correctly
+			SAXException.class,
+			NullPointerException.class // file is not xml
+	})
+	public ModelAndView badSpecfile() {
+		ModelAndView errorPage = new ModelAndView("errorPage");
+
+		String errorMsg = "Invalid Specfile Format";
+
+		errorPage.addObject("errorMsg", errorMsg);
+		return errorPage;
+	}
 }

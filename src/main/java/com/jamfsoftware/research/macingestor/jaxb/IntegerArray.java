@@ -152,8 +152,12 @@ public class IntegerArray implements MACDataType {
 	@Override
 	public List<java.lang.String> getDefaultValueList() {
 		List<java.lang.String> vals = new ArrayList<java.lang.String>();
-		for (java.lang.Integer i : defaultValue.getValue()) {
-			vals.add(i.toString());
+		if (defaultValue != null) {
+			for(java.lang.Integer i : defaultValue.getValue()) {
+				vals.add(i.toString());
+			}
+		} else {
+			vals.add("");
 		}
 		
 		return vals;
