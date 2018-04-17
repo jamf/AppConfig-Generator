@@ -196,7 +196,7 @@ public class String implements MACDataType {
 			return "hidden";
 		}
 		
-		if(constraint.values != null) { 
+		if(constraint != null && constraint.values != null) {
 			return "select";
 		}
 		
