@@ -152,7 +152,7 @@ public class Float implements MACDataType{
 	public List<java.lang.String> getDefaultValueList() {
 		try {
 			List<java.lang.String> defaults = new ArrayList<java.lang.String>();
-			if (defaultValue != null) {
+			if (defaultValue != null && defaultValue.getValue() != null) {
 				defaults.add(defaultValue.getValue().toString());
 			} else {
 				defaults.add("");
