@@ -152,8 +152,10 @@ public class FloatArray implements MACDataType{
 	@Override
 	public List<java.lang.String> getDefaultValueList() {
 		List<java.lang.String> floats = new ArrayList<java.lang.String>();
-		for(java.lang.Float f: defaultValue.getValue()){
-			floats.add(f.toString());
+		if (defaultValue != null && defaultValue.getValue() != null) {
+			for(java.lang.Float f : defaultValue.getValue()) {
+				floats.add(f.toString());
+			}
 		}
 		return floats;
 	}

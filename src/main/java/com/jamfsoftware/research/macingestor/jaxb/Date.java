@@ -151,12 +151,11 @@ public class Date implements MACDataType{
 	@Override
 	public List<java.lang.String> getDefaultValueList() {
 		List<java.lang.String> date = new ArrayList<java.lang.String>();
-		if (defaultValue != null) {
+		if (defaultValue != null && defaultValue.getValue() != null) {
 			date.add(defaultValue.getValue().toString());
 		} else {
 			date.add("");
 		}
-		date.add(defaultValue.getValue().toString());
 		return date;
 	}
 
