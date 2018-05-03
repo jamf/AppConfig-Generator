@@ -9,6 +9,7 @@
 package com.jamfsoftware.research.macingestor.jaxb;
 
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -152,7 +153,7 @@ public class Date implements MACDataType{
 	public List<java.lang.String> getDefaultValueList() {
 		List<java.lang.String> date = new ArrayList<java.lang.String>();
 		if (defaultValue != null && defaultValue.getValue() != null) {
-			date.add(defaultValue.getValue().toString());
+			date.add(new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'").format(defaultValue.getValue()));
 		} else {
 			date.add("");
 		}

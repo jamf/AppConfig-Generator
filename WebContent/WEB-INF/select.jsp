@@ -13,7 +13,7 @@
     	<% Option o = (Option)(request.getAttribute("option")); 
     		MACDataType data = (MACDataType)request.getAttribute("data");
     		String selected = "";
-    		if(o.getValue().equals(data.getDefaultValueList().get(0))){
+    		if(data.getDefaultValueList().size() > 0 && o.getValue().equals(data.getDefaultValueList().get(0))){
     			selected = "selected";
     		}
     	%>
