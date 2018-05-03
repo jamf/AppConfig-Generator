@@ -12,8 +12,8 @@ import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlSchemaType;
 import javax.xml.bind.annotation.XmlType;
+import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 import javax.xml.datatype.XMLGregorianCalendar;
-
 
 /**
  * <p>Java class for dateValueType complex type.
@@ -39,9 +39,10 @@ import javax.xml.datatype.XMLGregorianCalendar;
     "value"
 })
 public class DateValueType {
+    @XmlJavaTypeAdapter(value = DateAdapter.class, type = java.util.Date.class)
 
     @XmlSchemaType(name = "dateTime")
-    protected XMLGregorianCalendar value;
+    protected java.util.Date value;
 
     /**
      * Gets the value of the value property.
@@ -51,7 +52,7 @@ public class DateValueType {
      *     {@link XMLGregorianCalendar }
      *     
      */
-    public XMLGregorianCalendar getValue() {
+    public java.util.Date getValue() {
         return value;
     }
 
@@ -63,7 +64,7 @@ public class DateValueType {
      *     {@link XMLGregorianCalendar }
      *     
      */
-    public void setValue(XMLGregorianCalendar value) {
+    public void setValue(java.util.Date value) {
         this.value = value;
     }
 

@@ -13,8 +13,8 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlSchemaType;
 import javax.xml.bind.annotation.XmlType;
+import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 import javax.xml.datatype.XMLGregorianCalendar;
-
 
 /**
  * <p>Java class for dateConstraintType complex type.
@@ -39,12 +39,16 @@ import javax.xml.datatype.XMLGregorianCalendar;
 @XmlType(name = "dateConstraintType")
 public class DateConstraintType {
 
+    @XmlJavaTypeAdapter(value = DateAdapter.class, type = java.util.Date.class)
+
     @XmlAttribute(name = "max")
     @XmlSchemaType(name = "dateTime")
-    protected XMLGregorianCalendar max;
+    protected java.util.Date max;
+
     @XmlAttribute(name = "min")
     @XmlSchemaType(name = "dateTime")
-    protected XMLGregorianCalendar min;
+    protected java.util.Date min;
+
     @XmlAttribute(name = "nullable")
     protected java.lang.Boolean nullable;
 
@@ -56,7 +60,7 @@ public class DateConstraintType {
      *     {@link XMLGregorianCalendar }
      *     
      */
-    public XMLGregorianCalendar getMax() {
+    public java.util.Date getMax() {
         return max;
     }
 
@@ -68,7 +72,7 @@ public class DateConstraintType {
      *     {@link XMLGregorianCalendar }
      *     
      */
-    public void setMax(XMLGregorianCalendar value) {
+    public void setMax(java.util.Date value) {
         this.max = value;
     }
 
@@ -80,7 +84,7 @@ public class DateConstraintType {
      *     {@link XMLGregorianCalendar }
      *     
      */
-    public XMLGregorianCalendar getMin() {
+    public java.util.Date getMin() {
         return min;
     }
 
@@ -92,7 +96,7 @@ public class DateConstraintType {
      *     {@link XMLGregorianCalendar }
      *     
      */
-    public void setMin(XMLGregorianCalendar value) {
+    public void setMin(java.util.Date value) {
         this.min = value;
     }
 
