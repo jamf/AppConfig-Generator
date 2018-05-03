@@ -156,6 +156,8 @@ public class FloatArray implements MACDataType{
 			for(java.lang.Float f : defaultValue.getValue()) {
 				floats.add(f.toString());
 			}
+		} else {
+			floats.add("");
 		}
 		return floats;
 	}
