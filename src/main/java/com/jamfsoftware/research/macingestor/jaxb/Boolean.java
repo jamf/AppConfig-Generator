@@ -135,7 +135,7 @@ public class Boolean implements MACDataType {
 	@Override
 	public List<java.lang.String> getDefaultValueList() {
 		List<java.lang.String> values = new ArrayList<>();
-		if (defaultValue != null) {
+		if (defaultValue != null && defaultValue.value != null) {
 			values.add(defaultValue.value.toString());
 		} else {
 			values.add("");
