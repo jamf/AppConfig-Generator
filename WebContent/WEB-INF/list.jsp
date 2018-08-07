@@ -24,6 +24,13 @@ $(document).ready( function(){
 			</span>\
 		</div>';
 
+		// in order to not break when key names contain '.' this character must be escaped within the jquery search expression
+		// for this to happen the '\' must be escaped 4 times as seen below in order to end up with key\.name as the search termto
+		// (example with data.keyName = 'key.name'):
+		// $("[id^={'key.name'.replaceAll('[.]','\\\\\\\\.')}-remove-]") adds 4 \'s to become:
+		// $("[id^={'key\\\\.name'}-remove-]") then the jsp var evaluates to:
+		// $("[id^=key\\.name-remove-]") then the JQuery selection string evaluates to:
+		// id^=key\.name-remove- which is what JQuery then searches for
 		$('#${data.keyName.replaceAll(" ", "").replaceAll('[.]','\\\\\\\\.')}-dynamic-input').append(additionInput);
 
 		$("[id^=${data.keyName.replaceAll(" ", "").replaceAll('[.]','\\\\\\\\.')}-remove-]").click(function(event){
