@@ -143,7 +143,8 @@ public class Float implements MACDataType{
 		if(constraint != null && constraint.getMax() != null){
 			attributes += "data-parsley-max=\"" + constraint.getMax() + "\" ";
 		}
-		
+
+		attributes += "data-parsley-validate-if-empty ";
 		
 		return attributes;
 	}
