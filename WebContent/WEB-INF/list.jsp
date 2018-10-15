@@ -34,7 +34,7 @@ $(document).ready( function(){
 		$('#${data.keyName.replaceAll(" ", "").replaceAll('[.]','\\\\\\\\.')}-dynamic-input').append(additionInput);
 
 		$("[id^=${data.keyName.replaceAll(" ", "").replaceAll('[.]','\\\\\\\\.')}-remove-]").click(function(event){
-			$('#' + (this.id.replace("remove", "div").replace(" ","").replace(".","\\.")) ).remove();
+			$('#' + (this.id.replace("remove", "div").replace(/[.]/g, "\\.")) ).remove();
 		});
 
 		 nextField = nextField + 1;
