@@ -68,6 +68,8 @@ public class SettingsServlet {
 				request.getSession().setAttribute("mac", mac);
 
 				fileInputStream.close();
+
+				request.setAttribute("specfile", mac.getBundleId() + "/" + mac.getVersion());
 			} catch(IOException e) {
 				e.printStackTrace();
 			}
