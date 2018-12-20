@@ -56,7 +56,7 @@
 					</c:otherwise>
 				</c:choose>
 			</c:forEach>
-			<button type="submit" class="btn btn-default">Download Plist</button>
+			<button type="submit" class="btn btn-default">Submit</button>
 		</form>
 	</div>
 	
