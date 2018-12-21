@@ -64,6 +64,23 @@
       <div class="container">
         <p class="text-muted text-center center-text-trick">Copyright &copy; 2017 JAMF Software, LLC</p>
       </div>
-    </footer>	
+    </footer>
+	<!-- Global Site Tag (gtag.js) - Google Analytics -->
+	<script async src="https://www.googletagmanager.com/gtag/js?id=UA-81003953-3"></script>
+	<script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'UA-81003953-3');
+
+      <c:if test="${not empty specfile}">
+      gtag('event', 'appconfig_repository_usage', {
+          'event_category': 'specfile',
+          'event_label': '${specfile}',
+          'value': '1'
+      });
+      </c:if>
+	</script>
 </body>
 </html>
