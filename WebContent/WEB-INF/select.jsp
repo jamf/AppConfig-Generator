@@ -6,7 +6,7 @@
 
 
 <div class="form-group">
-  <label>${field.label.getLabel(pageContext.request.locale, defaultLocale) }</label>
+  <label>${not empty field.label ? field.label.getLabel(pageContext.request.locale, defaultLocale) : data.keyName}</label>
   <select class="form-control" id="${field.keyName}" name="${data.keyName}">
     <c:forEach var="option" items="${field.options.option}">
     	<c:set var="option" value="${option}" scope="request"></c:set>
