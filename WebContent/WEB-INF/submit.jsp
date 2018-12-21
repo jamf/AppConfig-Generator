@@ -57,6 +57,8 @@
 
 				copyText.select();
 				document.execCommand("copy");
+
+				copyText.value = text;
 			}
 		</script>
 
