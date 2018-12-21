@@ -59,6 +59,11 @@
 				document.execCommand("copy");
 
 				copyText.value = text;
+
+				document.getElementById("clipboard-alert").style.setProperty("display", "block");
+				setTimeout(function () {
+            document.getElementById("clipboard-alert").style.setProperty("display", "none");
+        }, 5000)
 			}
 		</script>
 
@@ -82,6 +87,9 @@
 			</div>
 		</form>
 
+		<div id="clipboard-alert" style="display: none;" class="alert alert-success" role="alert">
+			Dictionary copied to clipboard.
+		</div>
 	</div>
 
 	<footer class="footer">
