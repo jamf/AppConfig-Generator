@@ -67,7 +67,7 @@
 
 			<div class="form-group">
 				<label for="plist">Generated Plist:</label>
-				<textarea class="form-control" rows="5" id="plist" name="plist">${plist}</textarea>
+				<textarea readonly class="form-control" rows="10" id="plist" name="plist">${plist}</textarea>
 			</div>
 
 			<div class="btn-group">
