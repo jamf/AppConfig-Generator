@@ -75,7 +75,8 @@ public class SettingsServlet {
 			}
 		}
 
-		return "settings-repository";
+		request.setAttribute("repository", "../");
+		return "settings";
 	}
 	
 	
