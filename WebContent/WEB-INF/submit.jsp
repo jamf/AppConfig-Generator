@@ -70,12 +70,13 @@
 				<textarea readonly class="form-control" rows="10" id="plist" name="plist">${plist}</textarea>
 			</div>
 
-			<div class="btn-group">
-
-				<c:forEach var="par" items="${paramValues}">
-					<input type="hidden" name="${par.key}" value="${par.value}">
+			<c:forEach var="par" items="${paramValues}">
+				<c:forEach var='value' items='${par.value}'>
+					<input readonly type="hidden" name="${par.key}" value="${value}">
 				</c:forEach>
+			</c:forEach>
 
+			<div class="btn-group">
 				<button type="submit" class="btn btn-default">Download Plist</button>
 				<button type="button" class="btn btn-default" onclick="copyText()">Copy Dictionary</button>
 			</div>
