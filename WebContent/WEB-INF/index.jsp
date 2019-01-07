@@ -45,7 +45,7 @@
 		<p class="lead">For more information on AppConfig visit: <a href="https://appconfig.org/" target="_blank">appconfig.org</a> or view the <a href="https://storage.googleapis.com/appconfig-media/appconfig-content/uploads/2017/01/ManagedAppConfig.pdf" target="_blank">AppConfig Spec Reference</a></p>
 		<p class="lead">Follow the steps below to get started:</p>
 		<ol>
-			<li class="lead">Obtain a Managed App Configuration schema file from the application developer<br>and upload the schema file in the form below</li>
+			<li class="lead">Obtain a Managed App Configuration specfile from the application developer<br>and upload the specfile in the form below</li>
 
 			<form role="form" enctype="multipart/form-data" action="settings" method="post" class="center-block" role="form">
 				<input id="input-1" type="file" accept=".xml,application/xml,text/xml" class="file" name="file" data-show-preview="false" data-show-remove="false" data-upload-Label="Configure">
@@ -74,6 +74,15 @@
       <div class="container">
         <p class="text-muted text-center center-text-trick">Copyright &copy; 2017 JAMF Software, LLC</p>
       </div>
-    </footer>	
+    </footer>
+	<!-- Global Site Tag (gtag.js) - Google Analytics -->
+	<script async src="https://www.googletagmanager.com/gtag/js?id=UA-81003953-3"></script>
+	<script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'UA-81003953-3');
+	</script>
 </body>
 </html>

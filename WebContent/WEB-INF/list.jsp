@@ -53,7 +53,7 @@ $(document).ready( function(){
 
 
 <div class="form-group">
-  <label>${field.label.getLabel(pageContext.request.locale, defaultLocale) }</label>
+  <label>${not empty field.label ? field.label.getLabel(pageContext.request.locale, defaultLocale) : data.keyName}</label>
   <span class="glyphicon glyphicon-plus" id="${data.keyName.replaceAll(' ', '')}-add"></span>
   <div id="${data.keyName.replaceAll(' ', '')}-dynamic-input">
   </div>
