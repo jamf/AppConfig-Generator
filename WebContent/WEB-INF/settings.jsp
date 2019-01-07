@@ -73,6 +73,14 @@
       gtag('js', new Date());
 
       gtag('config', 'UA-81003953-3');
+
+      <c:if test="${not empty specfile}">
+      gtag('event', 'appconfig_repository_usage', {
+          'event_category': 'specfile',
+          'event_label': '${specfile}',
+          'value': '1'
+      });
+      </c:if>
 	</script>
 </body>
 </html>
