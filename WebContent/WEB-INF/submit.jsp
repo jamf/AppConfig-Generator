@@ -104,7 +104,7 @@
 			function gtag(){dataLayer.push(arguments);}
 			gtag('js', new Date());
 
-			gtag('config', 'UA-81003953-3');
+			gtag('config', 'UA-81003953-3', {'send_page_view': false});
 
 			<c:if test="${not empty specfile}">
 			gtag('event', 'appconfig_repository_usage', {
