@@ -40,6 +40,9 @@ public class SubmitServlet {
 		String plist = generatePlist(request);
 		request.setAttribute("plist", plist);
 
+		ManagedAppConfiguration mac = (ManagedAppConfiguration) request.getSession().getAttribute("mac");
+		request.setAttribute("specfile", mac.getBundleId() + "/" + mac.getVersion());
+
 		return "submit";
 	}
 	
