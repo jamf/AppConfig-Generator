@@ -20,10 +20,13 @@
 	
 	<mvc:annotation-driven />
 
+	<mvc:resources mapping="/resources/**" location="/resources/"/>
 	<mvc:resources mapping="/bootstrap/**" location="/bootstrap/"/>
-	<mvc:resources mapping="/fonts/**" location="/bootstrap/fonts/"/>
-	<mvc:resources mapping="/fileinput/**" location="/fileinput/"/>
-	<mvc:resources mapping="/parsley/**" location="/parsley/"/>
+	<mvc:resources mapping="/bootstrap-fileinput/**" location="/bootstrap-fileinput/"/>
+	<mvc:resources mapping="/jquery/**" location="/jquery/"/>
+	<mvc:resources mapping="/jquery-ui-dist/**" location="/jquery-ui-dist/"/>
+	<mvc:resources mapping="/fonts/**" location="/bootstrap/dist/fonts/"/>
+	<mvc:resources mapping="/parsleyjs/**" location="/parsleyjs/"/>
 	<mvc:resources mapping="/select2/**" location="/select2/"/>
 
 </beans>  

@@ -1,0 +1,12 @@
+{
+  "name": "appconfiggenerator",
+  "version": "1.0.0",
+  "description": "The AppConfig Generator is a tool which assists in the generation of a configuration plist for a mobile app on a device enrolled in an MDM solution.",
+  "dependencies": {
+    "bootstrap": "^3.4.1",
+    "bootstrap-fileinput": "^5.0.8",
+    "jquery-ui-dist": "^1.12.1",
+    "parsleyjs": "^2.9.2",
+    "select2": "^4.0.12"
+  }
+}
