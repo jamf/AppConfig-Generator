@@ -7,22 +7,20 @@
 	<title>AppConfig Generator</title>
 	<%--<link href="../bootstrap/css/bootstrap.css" rel="stylesheet" media="screen">--%>
 	<style type="text/css">
-		<%@ include file="../bootstrap/css/bootstrap-theme.css" %>
-		<%@ include file="../bootstrap/css/bootstrap.min.css" %>
-		<%@ include file="../parsley/parsley.css" %>
-		<%@ include file="../fileinput/css/fileinput.min.css" %>
-		<%@ include file="../select2/css/select2.min.css" %>
+		<%@ include file="../bootstrap/dist/css/bootstrap-theme.css" %>
+		<%@ include file="../bootstrap/dist/css/bootstrap.min.css" %>
+		<%@ include file="../resources/parsley.css" %>
+		<%@ include file="../bootstrap-fileinput/css/fileinput.min.css" %>
+		<%@ include file="../select2/dist/css/select2.min.css" %>
 		<%@ include file="style.css"%>
 	</style>
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<script src="../bootstrap/js/jquery.min.js"></script>
-	<script src="../bootstrap/js/jquery-ui.min.js"></script>
-	<script src="../bootstrap/js/bootstrap.js"></script>
-	<script src="../bootstrap/js/bootstrap-tokenfield.min.js"></script>
-	<script src="../parsley/parsley.min.js"></script>
-	<script src="../bootstrap/js/bootstrap.file-input.js"></script>
-	<script src="../fileinput/js/fileinput.min.js"></script>
-	<script src="../select2/js/select2.full.min.js"></script>
+	<script src="../jquery/dist/jquery.min.js"></script>
+	<script src="../jquery-ui-dist/jquery-ui.min.js"></script>
+	<script src="../bootstrap/dist/js/bootstrap.js"></script>
+	<script src="../parsleyjs/dist/parsley.min.js"></script>
+	<script src="../bootstrap-fileinput/js/fileinput.min.js"></script>
+	<script src="../select2/dist/js/select2.full.min.js"></script>
 	<script>
         $(document).ready(function() {
             $('.select-specfile').select2({

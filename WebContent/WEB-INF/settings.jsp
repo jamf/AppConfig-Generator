@@ -4,19 +4,17 @@
 <html>
 <head>
 <title>AppConfig Generator</title>
-<link href="${repository}bootstrap/css/bootstrap.css" rel="stylesheet" media="screen">
+<link href="${repository}bootstrap/dist/css/bootstrap.css" rel="stylesheet" media="screen">
 <style type="text/css">
-<%@ include file="../bootstrap/css/bootstrap-theme.css" %>
-<%@ include file="../bootstrap/css/bootstrap-tokenfield.min.css" %>
-<%@ include file="../parsley/parsley.css" %>
+<%@ include file="../bootstrap/dist/css/bootstrap-theme.css" %>
+<%@ include file="../resources/parsley.css" %>
 <%@ include file="style.css"%>
 </style>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<script src="${repository}bootstrap/js/jquery.min.js"></script>
-<script src="${repository}bootstrap/js/jquery-ui.min.js"></script>
-<script src="${repository}bootstrap/js/bootstrap.js"></script>
-<script src="${repository}bootstrap/js/bootstrap-tokenfield.min.js"></script>
-<script src="${repository}parsley/parsley.min.js"></script>
+<script src="${repository}jquery/dist/jquery.min.js"></script>
+<script src="${repository}jquery-ui-dist/jquery-ui.min.js"></script>
+<script src="${repository}bootstrap/dist/js/bootstrap.js"></script>
+<script src="${repository}parsleyjs/dist/parsley.min.js"></script>
 </head>
 <body>
 	<nav class="navbar navbar-default">
