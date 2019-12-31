@@ -24,3 +24,6 @@ target/
 \.project
 
 \.classpath
+
+node_modules/
+/node
